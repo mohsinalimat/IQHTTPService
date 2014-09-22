@@ -21,10 +21,10 @@
 		9D307FD719D02ACD0013BCAD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D307FB919D02ACD0013BCAD /* UIKit.framework */; };
 		9D307FDF19D02ACD0013BCAD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D307FDD19D02ACD0013BCAD /* InfoPlist.strings */; };
 		9D307FE119D02ACD0013BCAD /* IQHTTPService_DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FE019D02ACD0013BCAD /* IQHTTPService_DemoTests.m */; };
-		9D307FF419D02B100013BCAD /* IQHTTPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FEC19D02B100013BCAD /* IQHTTPConstants.m */; };
-		9D307FF519D02B100013BCAD /* IQHTTPService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FEE19D02B100013BCAD /* IQHTTPService.m */; };
-		9D307FF619D02B100013BCAD /* IQMultipartFormData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FF019D02B100013BCAD /* IQMultipartFormData.m */; };
-		9D307FF719D02B100013BCAD /* IQURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FF319D02B100013BCAD /* IQURLConnection.m */; };
+		9D30800219D030280013BCAD /* IQHTTPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FFA19D030280013BCAD /* IQHTTPConstants.m */; };
+		9D30800319D030280013BCAD /* IQHTTPService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FFC19D030280013BCAD /* IQHTTPService.m */; };
+		9D30800419D030280013BCAD /* IQMultipartFormData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FFE19D030280013BCAD /* IQMultipartFormData.m */; };
+		9D30800519D030280013BCAD /* IQURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D30800119D030280013BCAD /* IQURLConnection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,14 +57,14 @@
 		9D307FDC19D02ACD0013BCAD /* IQHTTPService DemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IQHTTPService DemoTests-Info.plist"; sourceTree = "<group>"; };
 		9D307FDE19D02ACD0013BCAD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9D307FE019D02ACD0013BCAD /* IQHTTPService_DemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IQHTTPService_DemoTests.m; sourceTree = "<group>"; };
-		9D307FEB19D02B100013BCAD /* IQHTTPConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQHTTPConstants.h; sourceTree = "<group>"; };
-		9D307FEC19D02B100013BCAD /* IQHTTPConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQHTTPConstants.m; sourceTree = "<group>"; };
-		9D307FED19D02B100013BCAD /* IQHTTPService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQHTTPService.h; sourceTree = "<group>"; };
-		9D307FEE19D02B100013BCAD /* IQHTTPService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQHTTPService.m; sourceTree = "<group>"; };
-		9D307FEF19D02B100013BCAD /* IQMultipartFormData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQMultipartFormData.h; sourceTree = "<group>"; };
-		9D307FF019D02B100013BCAD /* IQMultipartFormData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQMultipartFormData.m; sourceTree = "<group>"; };
-		9D307FF219D02B100013BCAD /* IQURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQURLConnection.h; sourceTree = "<group>"; };
-		9D307FF319D02B100013BCAD /* IQURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQURLConnection.m; sourceTree = "<group>"; };
+		9D307FF919D030280013BCAD /* IQHTTPConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQHTTPConstants.h; sourceTree = "<group>"; };
+		9D307FFA19D030280013BCAD /* IQHTTPConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQHTTPConstants.m; sourceTree = "<group>"; };
+		9D307FFB19D030280013BCAD /* IQHTTPService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQHTTPService.h; sourceTree = "<group>"; };
+		9D307FFC19D030280013BCAD /* IQHTTPService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQHTTPService.m; sourceTree = "<group>"; };
+		9D307FFD19D030280013BCAD /* IQMultipartFormData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQMultipartFormData.h; sourceTree = "<group>"; };
+		9D307FFE19D030280013BCAD /* IQMultipartFormData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQMultipartFormData.m; sourceTree = "<group>"; };
+		9D30800019D030280013BCAD /* IQURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQURLConnection.h; sourceTree = "<group>"; };
+		9D30800119D030280013BCAD /* IQURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQURLConnection.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +94,7 @@
 		9D307FA919D02ACD0013BCAD = {
 			isa = PBXGroup;
 			children = (
-				9D307FEA19D02B100013BCAD /* IQHTTPService */,
+				9D307FF819D030280013BCAD /* IQHTTPService */,
 				9D307FBB19D02ACD0013BCAD /* IQHTTPService Demo */,
 				9D307FDA19D02ACD0013BCAD /* IQHTTPService DemoTests */,
 				9D307FB419D02ACD0013BCAD /* Frameworks */,
@@ -165,25 +165,26 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9D307FEA19D02B100013BCAD /* IQHTTPService */ = {
+		9D307FF819D030280013BCAD /* IQHTTPService */ = {
 			isa = PBXGroup;
 			children = (
-				9D307FEB19D02B100013BCAD /* IQHTTPConstants.h */,
-				9D307FEC19D02B100013BCAD /* IQHTTPConstants.m */,
-				9D307FED19D02B100013BCAD /* IQHTTPService.h */,
-				9D307FEE19D02B100013BCAD /* IQHTTPService.m */,
-				9D307FEF19D02B100013BCAD /* IQMultipartFormData.h */,
-				9D307FF019D02B100013BCAD /* IQMultipartFormData.m */,
-				9D307FF119D02B100013BCAD /* IQURLConnection */,
+				9D307FF919D030280013BCAD /* IQHTTPConstants.h */,
+				9D307FFA19D030280013BCAD /* IQHTTPConstants.m */,
+				9D307FFB19D030280013BCAD /* IQHTTPService.h */,
+				9D307FFC19D030280013BCAD /* IQHTTPService.m */,
+				9D307FFD19D030280013BCAD /* IQMultipartFormData.h */,
+				9D307FFE19D030280013BCAD /* IQMultipartFormData.m */,
+				9D307FFF19D030280013BCAD /* IQURLConnection */,
 			);
-			path = IQHTTPService;
+			name = IQHTTPService;
+			path = ../IQHTTPService;
 			sourceTree = "<group>";
 		};
-		9D307FF119D02B100013BCAD /* IQURLConnection */ = {
+		9D307FFF19D030280013BCAD /* IQURLConnection */ = {
 			isa = PBXGroup;
 			children = (
-				9D307FF219D02B100013BCAD /* IQURLConnection.h */,
-				9D307FF319D02B100013BCAD /* IQURLConnection.m */,
+				9D30800019D030280013BCAD /* IQURLConnection.h */,
+				9D30800119D030280013BCAD /* IQURLConnection.m */,
 			);
 			path = IQURLConnection;
 			sourceTree = "<group>";
@@ -285,13 +286,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D307FF619D02B100013BCAD /* IQMultipartFormData.m in Sources */,
+				9D30800419D030280013BCAD /* IQMultipartFormData.m in Sources */,
 				9D307FCC19D02ACD0013BCAD /* ViewController.m in Sources */,
-				9D307FF519D02B100013BCAD /* IQHTTPService.m in Sources */,
+				9D30800319D030280013BCAD /* IQHTTPService.m in Sources */,
 				9D307FC619D02ACD0013BCAD /* AppDelegate.m in Sources */,
 				9D307FC219D02ACD0013BCAD /* main.m in Sources */,
-				9D307FF719D02B100013BCAD /* IQURLConnection.m in Sources */,
-				9D307FF419D02B100013BCAD /* IQHTTPConstants.m in Sources */,
+				9D30800519D030280013BCAD /* IQURLConnection.m in Sources */,
+				9D30800219D030280013BCAD /* IQHTTPConstants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
