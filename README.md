@@ -1,4 +1,4 @@
 IQHTTPService
 =============
 
-HTTP Client Service for iOS
+HTTP Client for iOS
