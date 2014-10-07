@@ -89,7 +89,7 @@
                          parameter:(NSDictionary*)parameter
              dataConstructionBlock:(IQMultipartFormDataConstructionBlock)dataConstructionBlock
                uploadProgressBlock:(IQProgressBlock)uploadProgress
-                     responseBlock:(IQDictionaryCompletionBlock)completionHandler;
+                 completionHandler:(IQDictionaryCompletionBlock)completionHandler;
 /************************************************/
 
 
