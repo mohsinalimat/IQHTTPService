@@ -60,7 +60,7 @@ static NSOperationQueue *queue;
 {
     if ([dataToResume length])
     {
-        [request addValue:[NSString stringWithFormat: @"bytes=%d-",[dataToResume length]] forHTTPHeaderField:@"Range"];
+        [request addValue:[NSString stringWithFormat: @"bytes=%lu-",(unsigned long)[dataToResume length]] forHTTPHeaderField:@"Range"];
     }
     
     if (self = [super initWithRequest:request delegate:self startImmediately:NO])

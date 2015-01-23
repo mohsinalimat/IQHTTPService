@@ -22,18 +22,39 @@
 // THE SOFTWARE.
 
 #import "IQMultipartFormData.h"
+#import "IQHTTPConstants.h"
 
 @implementation IQMultipartFormData
 
-+(instancetype)multipartDataWithName:(NSString*)name fileName:(NSString*)fileName data:(NSData*)data mimeType:(NSString*)mimeType
++(instancetype)multipartDataWithKeyName:(NSString*)keyName fileName:(NSString*)fileName data:(NSData*)data mimeType:(NSString*)mimeType
 {
-    IQMultipartFormData *multipartData = [[self alloc] init];
-    multipartData.name = name;
-    multipartData.fileName = fileName;
-    multipartData.data = data;
-    multipartData.mimeType = mimeType;
+    return [[IQMultipartFormData alloc] initWithWithKeyName:keyName fileName:fileName data:data mimeType:mimeType];
+}
 
-    return multipartData;
++(instancetype)multipartDataWithKeyName:(NSString*)keyName fileAtPath:(NSString*)filePath
+{
+    NSData *data = [[NSData alloc] initWithContentsOfFile:filePath];
+    NSString *mimeType = MIMETypeForFileAtPath(filePath);
+    NSString* fileName = [filePath lastPathComponent];
+                             
+    return [IQMultipartFormData multipartDataWithKeyName:keyName fileName:fileName data:data mimeType:mimeType];
+}
+
+-(instancetype)initWithWithKeyName:(NSString *)keyName fileName:(NSString *)fileName data:(NSData *)data mimeType:(NSString *)mimeType
+{
+    if (self = [super init])
+    {
+        NSAssert(keyName != nil, @"keyName must not be nil.");
+        NSAssert(data != nil, @"data must not be nil.");
+        NSAssert(mimeType != nil, @"mimeType must not be nil.");
+        
+        _keyName = keyName;
+        _fileName = fileName;
+        _data = data;
+        _mimeType = mimeType;
+    }
+    
+    return self;
 }
 
 @end

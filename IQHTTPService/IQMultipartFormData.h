@@ -25,11 +25,14 @@
 
 @interface IQMultipartFormData : NSObject
 
-+(instancetype)multipartDataWithName:(NSString*)name fileName:(NSString*)fileName data:(NSData*)data mimeType:(NSString*)mimeType;
++(instancetype)multipartDataWithKeyName:(NSString*)keyName fileName:(NSString*)fileName data:(NSData*)data mimeType:(NSString*)mimeType;
++(instancetype)multipartDataWithKeyName:(NSString*)keyName fileAtPath:(NSString*)filePath;
 
-@property(nonatomic, strong) NSString *name;
-@property(nonatomic, strong) NSString *fileName;
-@property(nonatomic, strong) NSData *data;
-@property(nonatomic, strong) NSString *mimeType;
+-(instancetype)initWithWithKeyName:(NSString *)keyName fileName:(NSString *)fileName data:(NSData *)data mimeType:(NSString *)mimeType;
+
+@property(nonatomic, strong, readonly) NSString *keyName;
+@property(nonatomic, strong, readonly) NSString *fileName;
+@property(nonatomic, strong, readonly) NSData *data;
+@property(nonatomic, strong, readonly) NSString *mimeType;
 
 @end

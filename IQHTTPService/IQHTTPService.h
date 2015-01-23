@@ -24,8 +24,8 @@
 
 #import <Foundation/Foundation.h>
 #import "IQHTTPConstants.h"
-
-@class IQURLConnection;
+#import "IQMultipartFormData.h"
+#import "IQURLConnection.h"
 
 @interface IQHTTPService : NSObject
 
@@ -33,15 +33,12 @@
 @property(nonatomic, assign) IQRequestParameterType parameterType;
 @property(nonatomic, retain) NSString *defaultContentType;
 @property(nonatomic, retain) NSString *serverURL;
-@property(nonatomic, retain) NSData *startBodyData;
-@property(nonatomic, retain) NSData *endBodyData;
 
 -(NSString*)headerForField:(NSString*)headerField;
 -(void)addDefaultHeaderValue:(NSString*)header forHeaderField:(NSString*)headerField;
 -(void)removeDefaultHeaderForField:(NSString*)headerField;
 -(void)setAuthorizationHeaderWithUsername:(NSString *)username password:(NSString *)password;
 -(void)setAuthorizationHeaderWithToken:(NSString *)token;
-
 
 //Shared Instance
 +(instancetype)service;
@@ -50,12 +47,13 @@
 #pragma mark -
 #pragma mark - Asynchronous Requests
 
-//Simple request
+//Simple request, return NSDictionary
 -(IQURLConnection*)requestWithPath:(NSString*)path
                         httpMethod:(NSString*)method
                          parameter:(NSDictionary*)parameter
                  completionHandler:(IQDictionaryCompletionBlock)completionHandler;
 
+//Simple request, return NSData
 -(IQURLConnection*)requestWithPath:(NSString*)path
                         httpMethod:(NSString*)method
                          parameter:(NSDictionary*)parameter
@@ -88,6 +86,18 @@
 -(IQURLConnection*)requestWithPath:(NSString*)path
                          parameter:(NSDictionary*)parameter
              dataConstructionBlock:(IQMultipartFormDataConstructionBlock)dataConstructionBlock
+               uploadProgressBlock:(IQProgressBlock)uploadProgress
+                 completionHandler:(IQDictionaryCompletionBlock)completionHandler;
+
+-(IQURLConnection*)requestWithPath:(NSString*)path
+                         parameter:(NSDictionary*)parameter
+                multipartFormDatas:(NSArray*)multipartFormDatas //Array of IQMultipartFormData objects to upload
+               uploadProgressBlock:(IQProgressBlock)uploadProgress
+                 completionHandler:(IQDictionaryCompletionBlock)completionHandler;
+
+-(IQURLConnection*)requestWithPath:(NSString*)path
+                         parameter:(NSDictionary*)parameter
+                 multipartFormData:(IQMultipartFormData*)multipartFormData //Single IQMultipartFormData object to upload
                uploadProgressBlock:(IQProgressBlock)uploadProgress
                  completionHandler:(IQDictionaryCompletionBlock)completionHandler;
 /************************************************/

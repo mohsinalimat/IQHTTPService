@@ -14,7 +14,7 @@
 		9D307FC219D02ACD0013BCAD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FC119D02ACD0013BCAD /* main.m */; };
 		9D307FC619D02ACD0013BCAD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FC519D02ACD0013BCAD /* AppDelegate.m */; };
 		9D307FC919D02ACD0013BCAD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D307FC719D02ACD0013BCAD /* Main.storyboard */; };
-		9D307FCC19D02ACD0013BCAD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FCB19D02ACD0013BCAD /* ViewController.m */; };
+		9D307FCC19D02ACD0013BCAD /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FCB19D02ACD0013BCAD /* TableViewController.m */; };
 		9D307FCE19D02ACD0013BCAD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D307FCD19D02ACD0013BCAD /* Images.xcassets */; };
 		9D307FD519D02ACD0013BCAD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D307FD419D02ACD0013BCAD /* XCTest.framework */; };
 		9D307FD619D02ACD0013BCAD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D307FB519D02ACD0013BCAD /* Foundation.framework */; };
@@ -25,6 +25,12 @@
 		9D30800319D030280013BCAD /* IQHTTPService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FFC19D030280013BCAD /* IQHTTPService.m */; };
 		9D30800419D030280013BCAD /* IQMultipartFormData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FFE19D030280013BCAD /* IQMultipartFormData.m */; };
 		9D30800519D030280013BCAD /* IQURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D30800119D030280013BCAD /* IQURLConnection.m */; };
+		C0DD7F5A1A72B3D000F3E46C /* test1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C0DD7F591A72B3D000F3E46C /* test1.jpeg */; };
+		C0DD7F5E1A72B5C600F3E46C /* TestHTTPService.m in Sources */ = {isa = PBXBuildFile; fileRef = C0DD7F5D1A72B5C600F3E46C /* TestHTTPService.m */; };
+		C0DD7F611A72B8CA00F3E46C /* FileUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0DD7F601A72B8CA00F3E46C /* FileUploadViewController.m */; };
+		C0DD7F641A72BAA000F3E46C /* HelloWorldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0DD7F631A72BAA000F3E46C /* HelloWorldViewController.m */; };
+		C0DD7F671A72BAC000F3E46C /* PostJSONViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0DD7F661A72BAC000F3E46C /* PostJSONViewController.m */; };
+		C0DD7F691A72C4A200F3E46C /* test2.png in Resources */ = {isa = PBXBuildFile; fileRef = C0DD7F681A72C4A200F3E46C /* test2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,8 +55,8 @@
 		9D307FC419D02ACD0013BCAD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9D307FC519D02ACD0013BCAD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		9D307FC819D02ACD0013BCAD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		9D307FCA19D02ACD0013BCAD /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9D307FCB19D02ACD0013BCAD /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9D307FCA19D02ACD0013BCAD /* TableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
+		9D307FCB19D02ACD0013BCAD /* TableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		9D307FCD19D02ACD0013BCAD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9D307FD319D02ACD0013BCAD /* IQHTTPService DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "IQHTTPService DemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D307FD419D02ACD0013BCAD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -65,6 +71,16 @@
 		9D307FFE19D030280013BCAD /* IQMultipartFormData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQMultipartFormData.m; sourceTree = "<group>"; };
 		9D30800019D030280013BCAD /* IQURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQURLConnection.h; sourceTree = "<group>"; };
 		9D30800119D030280013BCAD /* IQURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQURLConnection.m; sourceTree = "<group>"; };
+		C0DD7F591A72B3D000F3E46C /* test1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test1.jpeg; sourceTree = "<group>"; };
+		C0DD7F5C1A72B5C600F3E46C /* TestHTTPService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHTTPService.h; sourceTree = "<group>"; };
+		C0DD7F5D1A72B5C600F3E46C /* TestHTTPService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestHTTPService.m; sourceTree = "<group>"; };
+		C0DD7F5F1A72B8CA00F3E46C /* FileUploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUploadViewController.h; sourceTree = "<group>"; };
+		C0DD7F601A72B8CA00F3E46C /* FileUploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileUploadViewController.m; sourceTree = "<group>"; };
+		C0DD7F621A72BAA000F3E46C /* HelloWorldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldViewController.h; sourceTree = "<group>"; };
+		C0DD7F631A72BAA000F3E46C /* HelloWorldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloWorldViewController.m; sourceTree = "<group>"; };
+		C0DD7F651A72BAC000F3E46C /* PostJSONViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostJSONViewController.h; sourceTree = "<group>"; };
+		C0DD7F661A72BAC000F3E46C /* PostJSONViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostJSONViewController.m; sourceTree = "<group>"; };
+		C0DD7F681A72C4A200F3E46C /* test2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +110,7 @@
 		9D307FA919D02ACD0013BCAD = {
 			isa = PBXGroup;
 			children = (
+				C0DD7F5B1A72B5B500F3E46C /* TestHTTPService */,
 				9D307FF819D030280013BCAD /* IQHTTPService */,
 				9D307FBB19D02ACD0013BCAD /* IQHTTPService Demo */,
 				9D307FDA19D02ACD0013BCAD /* IQHTTPService DemoTests */,
@@ -128,8 +145,16 @@
 				9D307FC419D02ACD0013BCAD /* AppDelegate.h */,
 				9D307FC519D02ACD0013BCAD /* AppDelegate.m */,
 				9D307FC719D02ACD0013BCAD /* Main.storyboard */,
-				9D307FCA19D02ACD0013BCAD /* ViewController.h */,
-				9D307FCB19D02ACD0013BCAD /* ViewController.m */,
+				9D307FCA19D02ACD0013BCAD /* TableViewController.h */,
+				9D307FCB19D02ACD0013BCAD /* TableViewController.m */,
+				C0DD7F621A72BAA000F3E46C /* HelloWorldViewController.h */,
+				C0DD7F631A72BAA000F3E46C /* HelloWorldViewController.m */,
+				C0DD7F651A72BAC000F3E46C /* PostJSONViewController.h */,
+				C0DD7F661A72BAC000F3E46C /* PostJSONViewController.m */,
+				C0DD7F5F1A72B8CA00F3E46C /* FileUploadViewController.h */,
+				C0DD7F601A72B8CA00F3E46C /* FileUploadViewController.m */,
+				C0DD7F591A72B3D000F3E46C /* test1.jpeg */,
+				C0DD7F681A72C4A200F3E46C /* test2.png */,
 				9D307FCD19D02ACD0013BCAD /* Images.xcassets */,
 				9D307FBC19D02ACD0013BCAD /* Supporting Files */,
 			);
@@ -189,6 +214,15 @@
 			path = IQURLConnection;
 			sourceTree = "<group>";
 		};
+		C0DD7F5B1A72B5B500F3E46C /* TestHTTPService */ = {
+			isa = PBXGroup;
+			children = (
+				C0DD7F5C1A72B5C600F3E46C /* TestHTTPService.h */,
+				C0DD7F5D1A72B5C600F3E46C /* TestHTTPService.m */,
+			);
+			path = TestHTTPService;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -199,6 +233,7 @@
 				9D307FAE19D02ACD0013BCAD /* Sources */,
 				9D307FAF19D02ACD0013BCAD /* Frameworks */,
 				9D307FB019D02ACD0013BCAD /* Resources */,
+				420DA1AB49B88E50868F207A /* Find unused imports */,
 			);
 			buildRules = (
 			);
@@ -266,6 +301,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D307FCE19D02ACD0013BCAD /* Images.xcassets in Resources */,
+				C0DD7F691A72C4A200F3E46C /* test2.png in Resources */,
+				C0DD7F5A1A72B3D000F3E46C /* test1.jpeg in Resources */,
 				9D307FC019D02ACD0013BCAD /* InfoPlist.strings in Resources */,
 				9D307FC919D02ACD0013BCAD /* Main.storyboard in Resources */,
 			);
@@ -281,16 +318,37 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		420DA1AB49B88E50868F207A /* Find unused imports */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Find unused imports";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh \"/Users/iftekhar/Library/Application Support/Developer/Shared/Xcode/Plug-ins/xcfui.xcplugin/Contents/Resources/fui_script.sh\" \"/Volumes/Data/Home Products/Github/IQHTTPService/IQHTTPService Demo\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9D307FAE19D02ACD0013BCAD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0DD7F611A72B8CA00F3E46C /* FileUploadViewController.m in Sources */,
+				C0DD7F671A72BAC000F3E46C /* PostJSONViewController.m in Sources */,
 				9D30800419D030280013BCAD /* IQMultipartFormData.m in Sources */,
-				9D307FCC19D02ACD0013BCAD /* ViewController.m in Sources */,
+				C0DD7F641A72BAA000F3E46C /* HelloWorldViewController.m in Sources */,
+				9D307FCC19D02ACD0013BCAD /* TableViewController.m in Sources */,
 				9D30800319D030280013BCAD /* IQHTTPService.m in Sources */,
 				9D307FC619D02ACD0013BCAD /* AppDelegate.m in Sources */,
 				9D307FC219D02ACD0013BCAD /* main.m in Sources */,
+				C0DD7F5E1A72B5C600F3E46C /* TestHTTPService.m in Sources */,
 				9D30800519D030280013BCAD /* IQURLConnection.m in Sources */,
 				9D30800219D030280013BCAD /* IQHTTPConstants.m in Sources */,
 			);

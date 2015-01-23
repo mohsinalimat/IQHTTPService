@@ -23,8 +23,6 @@
 
 
 #import "IQHTTPService.h"
-#import "IQURLConnection.h"
-#import "IQMultipartFormData.h"
 
 @implementation IQHTTPService
 {
@@ -161,9 +159,7 @@
         {
             NSMutableData *editedData = [[NSMutableData alloc] init];
             
-            if (self.startBodyData) [editedData appendData:self.startBodyData];
             if (originalData)       [editedData appendData:originalData];
-            if (self.endBodyData)   [editedData appendData:self.endBodyData];
             
             httpBody = editedData;
         }
@@ -223,6 +219,29 @@
     
     return connection;
 }
+
+-(IQURLConnection*)requestWithPath:(NSString*)path parameter:(NSDictionary*)parameter multipartFormData:(IQMultipartFormData*)multipartFormData uploadProgressBlock:(IQProgressBlock)uploadProgress completionHandler:(IQDictionaryCompletionBlock)completionHandler
+{
+    return [self requestWithPath:path parameter:parameter multipartFormDatas:@[multipartFormData] uploadProgressBlock:uploadProgress completionHandler:completionHandler];
+}
+
+-(IQURLConnection*)requestWithPath:(NSString*)path parameter:(NSDictionary*)parameter multipartFormDatas:(NSArray*)multipartFormDatas uploadProgressBlock:(IQProgressBlock)uploadProgress completionHandler:(IQDictionaryCompletionBlock)completionHandler
+{
+    return [self requestWithPath:path parameter:parameter dataConstructionBlock:^IQMultipartFormData *(NSInteger index, BOOL *stop) {
+
+        if (multipartFormDatas.count>index)
+        {
+            return multipartFormDatas[index];
+        }
+        else
+        {
+            *stop = YES;
+            return nil;
+        }
+        
+    } uploadProgressBlock:uploadProgress completionHandler:completionHandler];
+}
+
 
 -(IQURLConnection*)requestWithPath:(NSString*)path parameter:(NSDictionary*)parameter dataConstructionBlock:(IQMultipartFormDataConstructionBlock)dataConstructionBlock uploadProgressBlock:(IQProgressBlock)uploadProgress completionHandler:(IQDictionaryCompletionBlock)completionHandler
 {
@@ -284,7 +303,7 @@
                     
                     [attributes appendString:@"Content-Disposition: form-data"];
                     
-                    if (formData.name)      [attributes appendFormat:@"; name=\"%@\"",formData.name];
+                    if (formData.keyName)      [attributes appendFormat:@"; name=\"%@\"",formData.keyName];
                     if (formData.fileName)  [attributes appendFormat:@"; filename=\"%@\"\r\n",formData.fileName];
                     
                     [attributes appendFormat:@"%@: %@\r\n\r\n", kIQContentType, formData.mimeType];
@@ -377,9 +396,7 @@
         {
             NSMutableData *editedData = [[NSMutableData alloc] init];
             
-            if (self.startBodyData) [editedData appendData:self.startBodyData];
             if (originalData)       [editedData appendData:originalData];
-            if (self.endBodyData)   [editedData appendData:self.endBodyData];
             
             httpBody = editedData;
         }
