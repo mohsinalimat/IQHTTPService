@@ -11,7 +11,9 @@
 
 @interface HelloWorldViewController ()
 {
+    IBOutlet UILabel *labelRequest;
     IBOutlet UILabel *labelInfo;
+    NSDictionary *requestDict;
 }
 
 @end
@@ -20,12 +22,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    requestDict = @{@"name":@"HTTP Service"};
+    labelRequest.text = [NSString stringWithFormat:@"%@",requestDict];
 }
 
 - (IBAction)requestAction:(UIButton *)sender {
 
-    [[TestHTTPService service] helloWithParameters:@{@"name":@"HTTP Service"} CompletionBlock:^(NSDictionary *result, NSError *error) {
+    [[TestHTTPService service] helloWithParameters:requestDict CompletionBlock:^(NSDictionary *result, NSError *error) {
         if (result)
         {
             labelInfo.text = [NSString stringWithFormat:@"%@",result];

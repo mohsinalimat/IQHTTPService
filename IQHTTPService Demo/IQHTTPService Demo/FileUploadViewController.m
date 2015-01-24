@@ -11,7 +11,9 @@
 
 @interface FileUploadViewController ()
 {
+    IBOutlet UILabel *labelRequest;
     IBOutlet UILabel *labelInfo;
+    NSDictionary *requestDict;
 }
 
 @end
@@ -20,7 +22,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    requestDict = @{@"Key1":@"Value1",@"Key2":@"Value2",@"Key3":@"Value3"};
+    labelRequest.text = [NSString stringWithFormat:@"%@",requestDict];
 }
 
 - (IBAction)requestAction:(UIButton *)sender {
@@ -29,7 +33,7 @@
     
     IQMultipartFormData *formDataPng = [IQMultipartFormData multipartDataWithKeyName:@"test2" fileAtPath:[[NSBundle mainBundle] pathForResource:@"test2" ofType:@"png"]];
     
-    [[TestHTTPService service] uploadFilesWithParameters:@{@"Key1":@"Value1",@"Key2":@"Value2",@"Key3":@"Value3"} files:@[formDataJpeg,formDataPng] completionBlock:^(NSDictionary *result, NSError *error) {
+    [[TestHTTPService service] uploadFilesWithParameters:requestDict files:@[formDataJpeg,formDataPng] completionBlock:^(NSDictionary *result, NSError *error) {
         if (result)
         {
             labelInfo.text = [NSString stringWithFormat:@"%@",result];

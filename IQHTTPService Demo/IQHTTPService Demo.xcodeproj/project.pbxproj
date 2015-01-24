@@ -233,7 +233,6 @@
 				9D307FAE19D02ACD0013BCAD /* Sources */,
 				9D307FAF19D02ACD0013BCAD /* Frameworks */,
 				9D307FB019D02ACD0013BCAD /* Resources */,
-				420DA1AB49B88E50868F207A /* Find unused imports */,
 			);
 			buildRules = (
 			);
@@ -317,23 +316,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		420DA1AB49B88E50868F207A /* Find unused imports */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Find unused imports";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"/Users/iftekhar/Library/Application Support/Developer/Shared/Xcode/Plug-ins/xcfui.xcplugin/Contents/Resources/fui_script.sh\" \"/Volumes/Data/Home Products/Github/IQHTTPService/IQHTTPService Demo\"";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9D307FAE19D02ACD0013BCAD /* Sources */ = {
