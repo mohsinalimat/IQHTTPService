@@ -11,7 +11,9 @@
 
 @interface PostJSONViewController ()
 {
+    IBOutlet UILabel *labelRequest;
     IBOutlet UILabel *labelInfo;
+    NSDictionary *requestDict;
 }
 
 @end
@@ -20,12 +22,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    requestDict = @{@"Key1":@"Value1",@"Key2":@"Value2",@"Key3":@"Value3"};
+    labelRequest.text = [NSString stringWithFormat:@"%@",requestDict];
 }
 
 - (IBAction)requestAction:(UIButton *)sender {
 
-    [[TestHTTPService service] postJSONWithParameters:@{@"Key1":@"Value1",@"Key2":@"Value2",@"Key3":@"Value3"} completionBlock:^(NSDictionary *result, NSError *error) {
+    [[TestHTTPService service] postJSONWithParameters:requestDict completionBlock:^(NSDictionary *result, NSError *error) {
         if (result)
         {
             labelInfo.text = [NSString stringWithFormat:@"%@",result];
