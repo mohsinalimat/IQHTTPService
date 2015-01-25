@@ -46,6 +46,7 @@
     {
         NSAssert(keyName != nil, @"keyName must not be nil.");
         NSAssert(data != nil, @"data must not be nil.");
+        NSAssert(fileName != nil, @"fileName must not be nil.");
         NSAssert(mimeType != nil, @"mimeType must not be nil.");
         
         _keyName = keyName;

@@ -120,14 +120,14 @@ NSString *const kIQHTTPMethodDELETE                         =   @"DELETE";
 
 void printHTTPRequest(NSURLRequest *request)
 {
-    if (request.URL == NULL)    NSLog(@"RequestURL is NULL");
-    else                        NSLog(@"RequestURL:- %@",request.URL);
+    NSMutableString *descriptionString = [[NSMutableString alloc] initWithString:@"HTTP Request:-"];
     
-    NSLog(@"HTTP Method:- %@",request.HTTPMethod);
+    [descriptionString appendFormat:@"\nURL:- %@",request.URL];
+    [descriptionString appendFormat:@"\nMethod:- %@",request.HTTPMethod];
     
     if (request.allHTTPHeaderFields)
     {
-        NSLog(@"HTTPHeaderFields:- %@",request.allHTTPHeaderFields);
+        [descriptionString appendFormat:@"\nHeaders:- %@",request.allHTTPHeaderFields];
     }
     
     if (request.HTTPBody)
@@ -136,28 +136,32 @@ void printHTTPRequest(NSURLRequest *request)
         
         if (requestString)
         {
-            NSLog(@"Request Body:- %@\n\n",requestString);
+            [descriptionString appendFormat:@"\nBody:- %@",request.allHTTPHeaderFields];
         }
         else
         {
-            NSLog(@"Request Body Length:- %lu\n\n",(unsigned long)[request.HTTPBody length]);
+            [descriptionString appendFormat:@"\nBody Length:- %lu",(unsigned long)[request.HTTPBody length]];
         }
     }
+    
+    NSLog(@"%@\n*********************************\n",descriptionString);
 }
 
 void printURLConnection(IQURLConnection *connection)
 {
-    NSLog(@"URL:- %@",connection.originalRequest.URL);
-    NSLog(@"HTTP Method:- %@",connection.originalRequest.HTTPMethod);
+    NSMutableString *descriptionString = [[NSMutableString alloc] initWithString:@"HTTP Response:-"];
+    
+    [descriptionString appendFormat:@"\nURL:- %@",connection.originalRequest.URL];
+    [descriptionString appendFormat:@"\nMethod:- %@",connection.originalRequest.HTTPMethod];
     
     if (connection.error)
     {
-        NSLog(@"error:- %@\n\n",connection.error);
+        [descriptionString appendFormat:@"\nError:- %@",connection.error];
     }
     
     if (connection.response)
     {
-        NSLog(@"Response Header:- %@\n\n",connection.response.allHeaderFields);
+        [descriptionString appendFormat:@"\nHeaders:- %@",connection.response.allHeaderFields];
     }
     
     if (connection.responseData)
@@ -166,13 +170,15 @@ void printURLConnection(IQURLConnection *connection)
         
         if ([responseString length])
         {
-            NSLog(@"Response:- %@\n\n",responseString);
+            [descriptionString appendFormat:@"\nBody:- %@",responseString];
         }
         else
         {
-            NSLog(@"Response Data Length:- %lu\n\n",(unsigned long)[connection.responseData length]);
+            [descriptionString appendFormat:@"\nBody Length:- %lu",(unsigned long)[connection.responseData length]];
         }
     }
+
+    NSLog(@"%@\n*********************************\n",descriptionString);
 }
 
 

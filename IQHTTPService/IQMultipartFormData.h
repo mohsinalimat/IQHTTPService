@@ -25,6 +25,7 @@
 
 @interface IQMultipartFormData : NSObject
 
+//All parameters are mendatory
 +(instancetype)multipartDataWithKeyName:(NSString*)keyName fileName:(NSString*)fileName data:(NSData*)data mimeType:(NSString*)mimeType;
 +(instancetype)multipartDataWithKeyName:(NSString*)keyName fileAtPath:(NSString*)filePath;
 
@@ -34,5 +35,6 @@
 @property(nonatomic, strong, readonly) NSString *fileName;
 @property(nonatomic, strong, readonly) NSData *data;
 @property(nonatomic, strong, readonly) NSString *mimeType;
+@property(nonatomic, strong) NSDictionary *additionalFileAttributes;
 
 @end

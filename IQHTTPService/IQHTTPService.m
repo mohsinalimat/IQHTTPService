@@ -263,21 +263,22 @@
         [request setValue:contentType forHTTPHeaderField:kIQContentType];
     }
     
+    NSMutableString *loggingMultipartString = [[NSMutableString alloc] init];  //  For logging purpose
+
     //Set HTTPBody
     {
-        NSMutableData *httpBody = [NSMutableData data];
-        
         __block NSMutableString *parameterAttributes = [[NSMutableString alloc] init];
         
         //Append Key-Value
         [parameter enumerateKeysAndObjectsUsingBlock:^(NSString *parameterKey, NSString *parameterValue, BOOL *stop)
          {
-             [parameterAttributes appendFormat:@"--%@\r\n", boundary];
-             [parameterAttributes appendFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", parameterKey];
-             [parameterAttributes appendFormat:@"%@\r\n", parameterValue];
+             [parameterAttributes appendFormat:@"--%@\r\n",boundary];
+             [parameterAttributes appendFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",parameterKey];
+             [parameterAttributes appendFormat:@"%@\r\n",parameterValue];
          }];
         
-        [httpBody appendData:[parameterAttributes dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableData *fileParameterData = [NSMutableData data];
+        [loggingMultipartString appendString:parameterAttributes];
         
         if (dataConstructionBlock)
         {
@@ -299,24 +300,37 @@
                 {
                     index++;
                     
-                    NSMutableString *attributes = [[NSMutableString alloc] initWithFormat:@"--%@\r\n", boundary];
+                    NSMutableString *attributes = [[NSMutableString alloc] initWithFormat:@"--%@\r\n",boundary];
+                    [attributes appendFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n",formData.keyName,formData.fileName];
+                    [attributes appendFormat:@"Content-Type: %@\r\n",formData.mimeType];
                     
-                    [attributes appendString:@"Content-Disposition: form-data"];
+                    for (NSString *key in formData.additionalFileAttributes)
+                    {
+                        NSString *value = [formData.additionalFileAttributes objectForKey:key];
+                        [attributes appendFormat:@"%@: %@\r\n",key,value];
+                    }
                     
-                    if (formData.keyName)      [attributes appendFormat:@"; name=\"%@\"",formData.keyName];
-                    if (formData.fileName)  [attributes appendFormat:@"; filename=\"%@\"\r\n",formData.fileName];
+                    [attributes appendString:@"\r\n"];
+
                     
-                    [attributes appendFormat:@"%@: %@\r\n\r\n", kIQContentType, formData.mimeType];
+                    [fileParameterData appendData:[attributes dataUsingEncoding:NSUTF8StringEncoding]];
+                    [fileParameterData appendData:formData.data];
+                    [fileParameterData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
                     
-                    [httpBody appendData:[attributes dataUsingEncoding:NSUTF8StringEncoding]];
-                    [httpBody appendData:formData.data];
-                    [httpBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+                    [loggingMultipartString appendString:attributes];
+                    [loggingMultipartString appendFormat:@"*** Raw Data of %@ ***",formData.fileName];
+                    [loggingMultipartString appendString:@"\r\n"];
                 }
             }
         }
+
+        NSString *closingBoundaryString = [NSString stringWithFormat:@"--%@--\r\n", boundary];
+        [loggingMultipartString appendString:closingBoundaryString];
         
-        //Closing boundary
-        [httpBody appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableData *httpBody = [NSMutableData data];
+        [httpBody appendData:[parameterAttributes dataUsingEncoding:NSUTF8StringEncoding]];
+        [httpBody appendData:fileParameterData];
+        [httpBody appendData:[closingBoundaryString dataUsingEncoding:NSUTF8StringEncoding]];
         
         request.HTTPBody = httpBody;
         
@@ -326,6 +340,7 @@
     if (_logEnabled)
 	{
         printHTTPRequest(request);
+        NSLog(@"Request Body:- \n%@\n*********************************\n",loggingMultipartString);
 	}
     
     __block IQURLConnection *connection = [IQURLConnection sendAsynchronousRequest:request responseBlock:NULL uploadProgressBlock:uploadProgress downloadProgressBlock:NULL completionHandler:^(NSData *result, NSError *error) {
