@@ -43,13 +43,28 @@
 
 +(instancetype)service
 {
-    static IQHTTPService *sharedService;
-    if (sharedService == nil)
+    static NSMutableDictionary *sharedDictionary;
+    
+    if (sharedDictionary == nil)    sharedDictionary = [[NSMutableDictionary alloc] init];
+    
+    id sharedObject = [sharedDictionary objectForKey:NSStringFromClass([self class])];
+    
+    if (sharedObject == nil)
     {
-        sharedService = [[self alloc] init];
+        if (![NSStringFromClass(self) isEqualToString:NSStringFromClass([IQHTTPService class])])
+        {
+            sharedObject = [[self alloc] init];
+            
+            [sharedDictionary setObject:sharedObject forKey:NSStringFromClass([self class])];
+        }
+        else
+        {
+            [NSException raise:NSInternalInconsistencyException format:@"You must subclass %@",NSStringFromClass([IQHTTPService class])];
+            return nil;
+        }
     }
     
-    return sharedService;
+    return sharedObject;
 }
 
 -(BOOL)isLogEnabled
