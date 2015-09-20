@@ -40,6 +40,8 @@
 -(void)setAuthorizationHeaderWithUsername:(NSString *)username password:(NSString *)password;
 -(void)setAuthorizationHeaderWithToken:(NSString *)token;
 
++(void)filterResult:(NSDictionary**)dict error:(NSError**)error response:(NSHTTPURLResponse*)response;
+
 //Shared Instance
 +(instancetype)service;
 
@@ -91,6 +93,20 @@
 
 -(IQURLConnection*)requestWithPath:(NSString*)path
                          parameter:(NSDictionary*)parameter
+                            method:(NSString*)method
+             dataConstructionBlock:(IQMultipartFormDataConstructionBlock)dataConstructionBlock
+               uploadProgressBlock:(IQProgressBlock)uploadProgress
+                 completionHandler:(IQDictionaryCompletionBlock)completionHandler;
+
+-(IQURLConnection*)requestWithPath:(NSString*)path
+                         parameter:(NSDictionary*)parameter
+                multipartFormDatas:(NSArray*)multipartFormDatas //Array of IQMultipartFormData objects to upload
+               uploadProgressBlock:(IQProgressBlock)uploadProgress
+                 completionHandler:(IQDictionaryCompletionBlock)completionHandler;
+
+-(IQURLConnection*)requestWithPath:(NSString*)path
+                         parameter:(NSDictionary*)parameter
+                        httpMethod:(NSString*)method
                 multipartFormDatas:(NSArray*)multipartFormDatas //Array of IQMultipartFormData objects to upload
                uploadProgressBlock:(IQProgressBlock)uploadProgress
                  completionHandler:(IQDictionaryCompletionBlock)completionHandler;

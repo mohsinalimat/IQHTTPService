@@ -43,18 +43,48 @@
 
 +(instancetype)service
 {
-    static IQHTTPService *sharedService;
-    if (sharedService == nil)
+    static NSMutableDictionary *sharedDictionary;
+    
+    if (sharedDictionary == nil)    sharedDictionary = [[NSMutableDictionary alloc] init];
+    
+    id sharedObject = [sharedDictionary objectForKey:NSStringFromClass([self class])];
+    
+    if (sharedObject == nil)
     {
-        sharedService = [[self alloc] init];
+        @synchronized(self) {
+            
+            //Again trying (May be set from another thread)
+            id sharedObject = [sharedDictionary objectForKey:NSStringFromClass([self class])];
+            
+            if (sharedObject)
+            {
+                return sharedObject;
+            }
+            else if (![NSStringFromClass(self) isEqualToString:NSStringFromClass([IQHTTPService class])])
+            {
+                sharedObject = [[self alloc] init];
+                
+                [sharedDictionary setObject:sharedObject forKey:NSStringFromClass([self class])];
+            }
+            else
+            {
+                [NSException raise:NSInternalInconsistencyException format:@"You must subclass %@",NSStringFromClass([IQHTTPService class])];
+                return nil;
+            }
+        }
     }
     
-    return sharedService;
+    return sharedObject;
 }
 
 -(BOOL)isLogEnabled
 {
-	return _logEnabled;
+    return _logEnabled;
+}
+
++(void)filterResult:(NSDictionary**)dict error:(NSError**)error response:(NSHTTPURLResponse*)response
+{
+
 }
 
 -(NSString*)headerForField:(NSString*)headerField
@@ -108,11 +138,13 @@
 #pragma mark -
 #pragma mark - Asynchronous Requests
 
--(IQURLConnection*)requestWithPath:(NSString*)path httpMethod:(NSString*)method parameter:(NSDictionary*)parameter completionHandler:(IQDictionaryCompletionBlock)completionHandler
+- (IQURLConnection*)requestWithPath:(NSString*)path httpMethod:(NSString*)method parameter:(NSDictionary*)parameter completionHandler:(IQDictionaryCompletionBlock)completionHandler
 {
-    return [self requestWithPath:path httpMethod:method parameter:parameter dataCompletionHandler:^(NSData *result, NSError *error) {
+    __block IQURLConnection *connection = [self requestWithPath:path httpMethod:method parameter:parameter dataCompletionHandler:^(NSData *result, NSError *error) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:result options:0 error:nil];
+        
+        [[self class] filterResult:&dict error:&error response:connection.response];
         
         if (completionHandler)
         {
@@ -120,6 +152,8 @@
         }
         
     }];
+    
+    return connection;
 }
 
 -(IQURLConnection*)requestWithPath:(NSString*)path httpMethod:(NSString*)method parameter:(NSDictionary*)parameter dataCompletionHandler:(IQDataCompletionBlock)completionHandler
@@ -137,7 +171,7 @@
         
         url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@%@",self.serverURL,path,parameterString] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
     }
-    else if ([method isEqualToString:kIQHTTPMethodPOST] || [method isEqualToString:kIQHTTPMethodPUT] || [method isEqualToString:kIQHTTPMethodDELETE])
+    else if ([method isEqualToString:kIQHTTPMethodPOST] || [method isEqualToString:kIQHTTPMethodPUT] || [method isEqualToString:kIQHTTPMethodDELETE] || [method isEqualToString:kIQHTTPMethodPATCH] || [method isEqualToString:kIQHTTPMethodHEAD])
     {
         url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@",self.serverURL,path] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
         
@@ -171,15 +205,19 @@
 
 -(IQURLConnection*)requestWithPath:(NSString*)path httpMethod:(NSString*)method contentType:(NSString*)contentType httpBody:(NSData*)httpBody completionHandler:(IQDictionaryCompletionBlock)completionHandler
 {
-    return [self requestWithPath:path httpMethod:method contentType:contentType httpBody:httpBody dataCompletionHandler:^(NSData *result, NSError *error) {
+    __block IQURLConnection *connection = [self requestWithPath:path httpMethod:method contentType:contentType httpBody:httpBody dataCompletionHandler:^(NSData *result, NSError *error) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:result options:0 error:nil];
+        
+        [[self class] filterResult:&dict error:&error response:connection.response];
         
         if (completionHandler)
         {
             completionHandler(dict,error);
         }
     }];
+    
+    return connection;
 }
 
 -(IQURLConnection*)requestWithPath:(NSString*)path httpMethod:(NSString*)method contentType:(NSString*)contentType httpBody:(NSData*)httpBody dataCompletionHandler:(IQDataCompletionBlock)completionHandler
@@ -211,24 +249,39 @@
         
         if (completionHandler != NULL)
         {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler(result, error);
-            });
+            completionHandler(result, error);
         }
     }];
+    
+    completionHandler = NULL;
     
     return connection;
 }
 
--(IQURLConnection*)requestWithPath:(NSString*)path parameter:(NSDictionary*)parameter multipartFormData:(IQMultipartFormData*)multipartFormData uploadProgressBlock:(IQProgressBlock)uploadProgress completionHandler:(IQDictionaryCompletionBlock)completionHandler
+- (IQURLConnection*)requestWithPath:(NSString*)path parameter:(NSDictionary*)parameter multipartFormData:(IQMultipartFormData*)multipartFormData uploadProgressBlock:(IQProgressBlock)uploadProgress completionHandler:(IQDictionaryCompletionBlock)completionHandler
 {
-    return [self requestWithPath:path parameter:parameter multipartFormDatas:@[multipartFormData] uploadProgressBlock:uploadProgress completionHandler:completionHandler];
+    return [self requestWithPath:path
+                       parameter:parameter
+              multipartFormDatas:(multipartFormData) ? @[multipartFormData] : @[]
+             uploadProgressBlock:uploadProgress
+               completionHandler:completionHandler];
 }
 
 -(IQURLConnection*)requestWithPath:(NSString*)path parameter:(NSDictionary*)parameter multipartFormDatas:(NSArray*)multipartFormDatas uploadProgressBlock:(IQProgressBlock)uploadProgress completionHandler:(IQDictionaryCompletionBlock)completionHandler
 {
-    return [self requestWithPath:path parameter:parameter dataConstructionBlock:^IQMultipartFormData *(NSInteger index, BOOL *stop) {
+    return [self requestWithPath:path parameter:parameter httpMethod:kIQHTTPMethodPOST multipartFormDatas:multipartFormDatas uploadProgressBlock:uploadProgress completionHandler:completionHandler];
+}
 
+-(IQURLConnection*)requestWithPath:(NSString*)path
+                         parameter:(NSDictionary*)parameter
+                        httpMethod:(NSString*)method
+                multipartFormDatas:(NSArray*)multipartFormDatas //Array of IQMultipartFormData objects to upload
+               uploadProgressBlock:(IQProgressBlock)uploadProgress
+                 completionHandler:(IQDictionaryCompletionBlock)completionHandler
+{
+    
+    return [self requestWithPath:path parameter:parameter method:method dataConstructionBlock:^IQMultipartFormData *(NSInteger index, BOOL *stop) {
+        
         if (multipartFormDatas.count>index)
         {
             return multipartFormDatas[index];
@@ -245,10 +298,15 @@
 
 -(IQURLConnection*)requestWithPath:(NSString*)path parameter:(NSDictionary*)parameter dataConstructionBlock:(IQMultipartFormDataConstructionBlock)dataConstructionBlock uploadProgressBlock:(IQProgressBlock)uploadProgress completionHandler:(IQDictionaryCompletionBlock)completionHandler
 {
+    return [self requestWithPath:path parameter:parameter method:kIQHTTPMethodPOST dataConstructionBlock:dataConstructionBlock uploadProgressBlock:uploadProgress completionHandler:completionHandler];
+}
+
+-(IQURLConnection*)requestWithPath:(NSString*)path parameter:(NSDictionary*)parameter method:(NSString*)method dataConstructionBlock:(IQMultipartFormDataConstructionBlock)dataConstructionBlock uploadProgressBlock:(IQProgressBlock)uploadProgress completionHandler:(IQDictionaryCompletionBlock)completionHandler
+{
     NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@",self.serverURL,path] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-    [request setHTTPMethod:kIQHTTPMethodPOST];
+    [request setHTTPMethod:method];
     
     //Adding headers
     {
@@ -350,15 +408,17 @@
             printURLConnection(connection);
         }
         
-        if (completionHandler != NULL)
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:result options:0 error:nil];
+        
+        [[self class] filterResult:&dict error:&error response:connection.response];
+        
+        if (completionHandler)
         {
-            NSDictionary *response = [NSJSONSerialization JSONObjectWithData:result options:0 error:nil];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler(response, error);
-            });
+            completionHandler(dict,error);
         }
     }];
+    
+    completionHandler = NULL;
     
     return connection;
 }
@@ -474,5 +534,4 @@
 }
 
 @end
-
 

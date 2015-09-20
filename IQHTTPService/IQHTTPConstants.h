@@ -113,6 +113,10 @@ extern NSString *const kIQHTTPMethodGET;
 extern NSString *const kIQHTTPMethodPUT;
 /*! @abstract @"DELETE"  */
 extern NSString *const kIQHTTPMethodDELETE;
+/*! @abstract @"HEAD"  */
+extern NSString *const kIQHTTPMethodHEAD;
+/*! @abstract @"PATCH"  */
+extern NSString *const kIQHTTPMethodPATCH;
 
 
 #pragma mark - HTTP Content-Type constant strings

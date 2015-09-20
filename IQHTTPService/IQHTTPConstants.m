@@ -116,6 +116,8 @@ NSString *const kIQHTTPMethodPOST                           =   @"POST";
 NSString *const kIQHTTPMethodGET                            =   @"GET";
 NSString *const kIQHTTPMethodPUT                            =   @"PUT";
 NSString *const kIQHTTPMethodDELETE                         =   @"DELETE";
+NSString *const kIQHTTPMethodHEAD                           =   @"HEAD";
+NSString *const kIQHTTPMethodPATCH                          =   @"PATCH";
 
 
 void printHTTPRequest(NSURLRequest *request)

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4CBEC56E1BAE8DBF00117F83 /* NSError+HumanFriendly.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBEC56D1BAE8DBF00117F83 /* NSError+HumanFriendly.m */; settings = {ASSET_TAGS = (); }; };
 		9D307FB619D02ACD0013BCAD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D307FB519D02ACD0013BCAD /* Foundation.framework */; };
 		9D307FB819D02ACD0013BCAD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D307FB719D02ACD0013BCAD /* CoreGraphics.framework */; };
 		9D307FBA19D02ACD0013BCAD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D307FB919D02ACD0013BCAD /* UIKit.framework */; };
@@ -44,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4CBEC56C1BAE8DBF00117F83 /* NSError+HumanFriendly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+HumanFriendly.h"; sourceTree = "<group>"; };
+		4CBEC56D1BAE8DBF00117F83 /* NSError+HumanFriendly.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+HumanFriendly.m"; sourceTree = "<group>"; };
 		9D307FB219D02ACD0013BCAD /* IQHTTPService Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IQHTTPService Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D307FB519D02ACD0013BCAD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9D307FB719D02ACD0013BCAD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -199,6 +202,8 @@
 				9D307FFC19D030280013BCAD /* IQHTTPService.m */,
 				9D307FFD19D030280013BCAD /* IQMultipartFormData.h */,
 				9D307FFE19D030280013BCAD /* IQMultipartFormData.m */,
+				4CBEC56C1BAE8DBF00117F83 /* NSError+HumanFriendly.h */,
+				4CBEC56D1BAE8DBF00117F83 /* NSError+HumanFriendly.m */,
 				9D307FFF19D030280013BCAD /* IQURLConnection */,
 			);
 			name = IQHTTPService;
@@ -267,7 +272,7 @@
 		9D307FAA19D02ACD0013BCAD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Iftekhar;
 				TargetAttributes = {
 					9D307FD219D02ACD0013BCAD = {
@@ -324,6 +329,7 @@
 			files = (
 				C0DD7F611A72B8CA00F3E46C /* FileUploadViewController.m in Sources */,
 				C0DD7F671A72BAC000F3E46C /* PostJSONViewController.m in Sources */,
+				4CBEC56E1BAE8DBF00117F83 /* NSError+HumanFriendly.m in Sources */,
 				9D30800419D030280013BCAD /* IQMultipartFormData.m in Sources */,
 				C0DD7F641A72BAA000F3E46C /* HelloWorldViewController.m in Sources */,
 				9D307FCC19D02ACD0013BCAD /* TableViewController.m in Sources */,
@@ -400,6 +406,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
