@@ -1,7 +1,7 @@
 //
 //  IQHTTPService.h
 // https://github.com/hackiftekhar/IQHTTPService
-// Copyright (c) 2013-14 Iftekhar Qurashi.
+// Copyright (c) 2013-16 Iftekhar Qurashi.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,127 +29,101 @@
 
 @interface IQHTTPService : NSObject
 
+///--------------------------
+/// @name Singleton Instance
+///--------------------------
+
++(instancetype _Nonnull)service;
+
+
+
+///--------------------------
+/// @name Subclasses only
+///--------------------------
+
+/**
+ @required method Subclass must override this method and return the API path override this method.
+ */
+-( NSString* _Nonnull)endpointAPIPathString;
+
+/**
+ @optional method Use this method to filter response json response according to your needs
+ */
++(void)filterResult:(id _Nullable * _Nullable)dict error:(NSError* _Nullable * _Nullable)error response:(NSHTTPURLResponse* _Nullable)response;
+
+
+
+///--------------------------
+/// @name Debugging
+///--------------------------
+
+/**
+ If YES then print all request/response logs on console
+ */
 @property(nonatomic, assign, getter = isLogEnabled) BOOL logEnabled;
+
+
+
+///--------------------------
+/// @name Reqeust customisation
+///--------------------------
+
+/**
+ IQRequestParameterTypeApplicationJSON If you want to send httpBody in json form.
+ IQRequestParameterTypeApplicationXWwwFormUrlEncoded If you want to send httpBody in & seprated form.
+ */
 @property(nonatomic, assign) IQRequestParameterType parameterType;
-@property(nonatomic, retain) NSString *defaultContentType;
-@property(nonatomic, retain) NSString *serverURL;
 
--(NSString*)headerForField:(NSString*)headerField;
--(void)addDefaultHeaderValue:(NSString*)header forHeaderField:(NSString*)headerField;
--(void)removeDefaultHeaderForField:(NSString*)headerField;
--(void)setAuthorizationHeaderWithUsername:(NSString *)username password:(NSString *)password;
--(void)setAuthorizationHeaderWithToken:(NSString *)token;
-
-+(void)filterResult:(NSDictionary**)dict error:(NSError**)error response:(NSHTTPURLResponse*)response;
-
-//Shared Instance
-+(instancetype)service;
-
-/************************************************/
-#pragma mark -
-#pragma mark - Asynchronous Requests
-
-//Simple request, return NSDictionary
--(IQURLConnection*)requestWithPath:(NSString*)path
-                        httpMethod:(NSString*)method
-                         parameter:(NSDictionary*)parameter
-                 completionHandler:(IQDictionaryCompletionBlock)completionHandler;
-
-//Simple request, return NSData
--(IQURLConnection*)requestWithPath:(NSString*)path
-                        httpMethod:(NSString*)method
-                         parameter:(NSDictionary*)parameter
-             dataCompletionHandler:(IQDataCompletionBlock)completionHandler;
-/************************************************/
-
-//Request with content-Type and body
--(IQURLConnection*)requestWithPath:(NSString*)path
-                        httpMethod:(NSString*)method
-                       contentType:(NSString*)contentType
-                          httpBody:(NSData*)httpBody
-                 completionHandler:(IQDictionaryCompletionBlock)completionHandler;
-
--(IQURLConnection*)requestWithPath:(NSString*)path
-                        httpMethod:(NSString*)method
-                       contentType:(NSString*)contentType
-                          httpBody:(NSData*)httpBody
-             dataCompletionHandler:(IQDataCompletionBlock)completionHandler;
-/************************************************/
-
-//Request with URL
--(IQURLConnection*)requestWithURL:(NSURL*)url
-                       httpMethod:(NSString*)method
-                      contentType:(NSString*)contentType
-                         httpBody:(NSData*)httpBody
-            dataCompletionHandler:(IQDataCompletionBlock)completionHandler;
-/************************************************/
-
-//File Upload Request
--(IQURLConnection*)requestWithPath:(NSString*)path
-                         parameter:(NSDictionary*)parameter
-             dataConstructionBlock:(IQMultipartFormDataConstructionBlock)dataConstructionBlock
-               uploadProgressBlock:(IQProgressBlock)uploadProgress
-                 completionHandler:(IQDictionaryCompletionBlock)completionHandler;
-
--(IQURLConnection*)requestWithPath:(NSString*)path
-                         parameter:(NSDictionary*)parameter
-                            method:(NSString*)method
-             dataConstructionBlock:(IQMultipartFormDataConstructionBlock)dataConstructionBlock
-               uploadProgressBlock:(IQProgressBlock)uploadProgress
-                 completionHandler:(IQDictionaryCompletionBlock)completionHandler;
-
--(IQURLConnection*)requestWithPath:(NSString*)path
-                         parameter:(NSDictionary*)parameter
-                multipartFormDatas:(NSArray*)multipartFormDatas //Array of IQMultipartFormData objects to upload
-               uploadProgressBlock:(IQProgressBlock)uploadProgress
-                 completionHandler:(IQDictionaryCompletionBlock)completionHandler;
-
--(IQURLConnection*)requestWithPath:(NSString*)path
-                         parameter:(NSDictionary*)parameter
-                        httpMethod:(NSString*)method
-                multipartFormDatas:(NSArray*)multipartFormDatas //Array of IQMultipartFormData objects to upload
-               uploadProgressBlock:(IQProgressBlock)uploadProgress
-                 completionHandler:(IQDictionaryCompletionBlock)completionHandler;
-
--(IQURLConnection*)requestWithPath:(NSString*)path
-                         parameter:(NSDictionary*)parameter
-                 multipartFormData:(IQMultipartFormData*)multipartFormData //Single IQMultipartFormData object to upload
-               uploadProgressBlock:(IQProgressBlock)uploadProgress
-                 completionHandler:(IQDictionaryCompletionBlock)completionHandler;
-/************************************************/
+/**
+ Default Content-Type for all requests.
+ */
+@property(nullable, nonatomic, retain) NSString *defaultContentType;
 
 
-#pragma mark -
-#pragma mark - Synchronous Requests
-//Synchronous request
--(NSDictionary*)synchronousRequestWithPath:(NSString*)path
-                                httpMethod:(NSString*)method
-                                 parameter:(NSDictionary*)parameter
-                                     error:(NSError**)error;
 
--(NSData*)synchronousDataRequestWithPath:(NSString*)path
-                              httpMethod:(NSString*)method
-                               parameter:(NSDictionary*)parameter
-                                   error:(NSError**)error;
+///--------------------------
+/// @name Default Headers
+///--------------------------
 
--(NSDictionary*)synchronousRequestWithPath:(NSString*)path
-                                httpMethod:(NSString*)method
-                               contentType:(NSString*)contentType
-                                  httpBody:(NSData*)httpBody
-                                     error:(NSError**)error;
+/**
+ Default headers for all http request
+ */
+@property(nonnull, nonatomic, retain) NSMutableDictionary <NSString *, NSString *> *defaultHeaders;
 
--(NSData*)synchronousDataRequestWithPath:(NSString*)path
-                              httpMethod:(NSString*)method
-                             contentType:(NSString*)contentType
-                                httpBody:(NSData*)httpBody
-                                   error:(NSError**)error;
+/**
+ Set Basic authorization header in defaultHeaders
+ */
+-(void)setAuthorizationHeaderWithUsername:(NSString * _Nonnull)username password:(NSString * _Nonnull)password;
 
--(NSData*)synchronousRequestWithURL:(NSURL*)url
-                         httpMethod:(NSString*)method
-                        contentType:(NSString*)contentType
-                           httpBody:(NSData*)httpBody
-                              error:(NSError**)error;
-/************************************************/
+/**
+ Set Token authorization header in defaultHeaders
+ */
+-(void)setAuthorizationHeaderWithToken:(NSString * _Nonnull)token;
 
 
+
+///----------------------------
+/// @name Asynchronous Requests
+///----------------------------
+
+-(IQURLConnection* _Nonnull)requestWithPath:(NSString* _Nonnull)path
+                                 httpMethod:(NSString* _Nullable)method
+                                  parameter:(NSDictionary <NSString *, id> * _Nullable)parameter
+                          completionHandler:(IQDictionaryCompletionBlock _Nullable)completionHandler;
+
+-(IQURLConnection* _Nonnull)requestWithPath:(NSString* _Nonnull)path
+                                 httpMethod:(NSString* _Nullable)method
+                                contentType:(NSString* _Nullable)contentType
+                                   httpBody:(NSData* _Nullable)httpBody
+                          completionHandler:(IQDictionaryCompletionBlock _Nullable)completionHandler;
+
+///---------------------------------
+/// @name Asynchronous File Requests
+///---------------------------------
+
+-(IQURLConnection* _Nonnull)requestWithPath:(NSString* _Nonnull)path
+                                 httpMethod:(NSString* _Nullable)method
+                                  parameter:(NSDictionary <NSString *, id> * _Nullable)parameter
+                         multipartFormDatas:(NSArray <IQMultipartFormData *>  * _Nonnull)multipartFormDatas
+                          completionHandler:(IQDictionaryCompletionBlock _Nullable)completionHandler;
 @end

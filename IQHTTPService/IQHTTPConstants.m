@@ -1,7 +1,7 @@
 //
 //  IQHTTPConstants.m
 // https://github.com/hackiftekhar/IQHTTPService
-// Copyright (c) 2013-14 Iftekhar Qurashi.
+// Copyright (c) 2013-16 Iftekhar Qurashi.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,97 +30,97 @@
 @class NSString, NSData;
 
 #pragma mark - HTTP Header field constant strings
-NSString *const kIQAccept                                   =   @"Accept";
-NSString *const kIQAcceptCharset                            =   @"Accept-Charset";
-NSString *const kIQAcceptDatetime                           =   @"Accept-Datetime";
-NSString *const kIQAcceptEncoding                           =   @"Accept-Encoding";
-NSString *const kIQAcceptLanguage                           =   @"Accept-Language";
-NSString *const kIQAcceptRanges                             =   @"Accept-Ranges";
-NSString *const kIQAuthorization                            =   @"Authorization";
-NSString *const kIQCacheControl                             =   @"Cache-Control";
-NSString *const kIQConnection                               =   @"Connection";
-NSString *const kIQContentEncoding                          =   @"Content-Encoding";
-NSString *const kIQContentMD5                               =   @"Content-MD5";
-NSString *const kIQContentLanguage                          =   @"Content-Language";
-NSString *const kIQContentLength                            =   @"Content-Length";
-NSString *const kIQContentLocation                          =   @"Content-Location";
-NSString *const kIQContentRange                             =   @"Content-Range";
-NSString *const kIQContentType                              =   @"Content-Type";
-NSString *const kIQCookie                                   =   @"Cookie";
-NSString *const kIQDate                                     =   @"Date";
-NSString *const kIQExpires                                  =   @"Expires";
-NSString *const kIQHost                                     =   @"Host";
-NSString *const kIQKeepAlive                                =   @"Keep-Alive";
-NSString *const kIQLastModified                             =   @"Last-Modified";
-NSString *const kIQProxyConnection                          =   @"Proxy-Connection";
-NSString *const kIQRange                                    =   @"Range";
-NSString *const kIQReferer                                  =   @"Referer";
-NSString *const kIQServer                                   =   @"Server";
-NSString *const kIQSOAPAction                               =   @"SOAPAction";
-NSString *const kIQStatus                                   =   @"Status";
-NSString *const kIQUserAgent                                =   @"User-Agent";
-NSString *const kIQVia                                      =   @"Via";
-NSString *const kIQXPoweredBy                               =   @"X-Powered-By";
+NSString* _Nonnull const kIQAccept                                   =   @"Accept";
+NSString* _Nonnull const kIQAcceptCharset                            =   @"Accept-Charset";
+NSString* _Nonnull const kIQAcceptDatetime                           =   @"Accept-Datetime";
+NSString* _Nonnull const kIQAcceptEncoding                           =   @"Accept-Encoding";
+NSString* _Nonnull const kIQAcceptLanguage                           =   @"Accept-Language";
+NSString* _Nonnull const kIQAcceptRanges                             =   @"Accept-Ranges";
+NSString* _Nonnull const kIQAuthorization                            =   @"Authorization";
+NSString* _Nonnull const kIQCacheControl                             =   @"Cache-Control";
+NSString* _Nonnull const kIQConnection                               =   @"Connection";
+NSString* _Nonnull const kIQContentEncoding                          =   @"Content-Encoding";
+NSString* _Nonnull const kIQContentMD5                               =   @"Content-MD5";
+NSString* _Nonnull const kIQContentLanguage                          =   @"Content-Language";
+NSString* _Nonnull const kIQContentLength                            =   @"Content-Length";
+NSString* _Nonnull const kIQContentLocation                          =   @"Content-Location";
+NSString* _Nonnull const kIQContentRange                             =   @"Content-Range";
+NSString* _Nonnull const kIQContentType                              =   @"Content-Type";
+NSString* _Nonnull const kIQCookie                                   =   @"Cookie";
+NSString* _Nonnull const kIQDate                                     =   @"Date";
+NSString* _Nonnull const kIQExpires                                  =   @"Expires";
+NSString* _Nonnull const kIQHost                                     =   @"Host";
+NSString* _Nonnull const kIQKeepAlive                                =   @"Keep-Alive";
+NSString* _Nonnull const kIQLastModified                             =   @"Last-Modified";
+NSString* _Nonnull const kIQProxyConnection                          =   @"Proxy-Connection";
+NSString* _Nonnull const kIQRange                                    =   @"Range";
+NSString* _Nonnull const kIQReferer                                  =   @"Referer";
+NSString* _Nonnull const kIQServer                                   =   @"Server";
+NSString* _Nonnull const kIQSOAPAction                               =   @"SOAPAction";
+NSString* _Nonnull const kIQStatus                                   =   @"Status";
+NSString* _Nonnull const kIQUserAgent                                =   @"User-Agent";
+NSString* _Nonnull const kIQVia                                      =   @"Via";
+NSString* _Nonnull const kIQXPoweredBy                               =   @"X-Powered-By";
 
 
 #pragma mark - HTTP Content-Type constant strings
 //For Multipurpose files
-NSString *const kIQContentTypeApplicationXWwwFormUrlEncoded =   @"application/x-www-form-urlencoded";
-NSString *const kIQContentTypeApplicationJson               =   @"application/json";
-NSString *const kIQContentTypeApplicationJavaScript         =   @"application/javascript";
-NSString *const kIQContentTypeApplicationPdf                =   @"application/pdf";
-NSString *const kIQContentTypeApplicationSoapXml            =   @"application/soap+xml";
-NSString *const kIQContentTypeApplicationXml                =   @"application/xml";
-NSString *const kIQContentTypeApplicationZip                =   @"application/zip";
+NSString* _Nonnull const kIQContentTypeApplicationXWwwFormUrlEncoded =   @"application/x-www-form-urlencoded";
+NSString* _Nonnull const kIQContentTypeApplicationJson               =   @"application/json";
+NSString* _Nonnull const kIQContentTypeApplicationJavaScript         =   @"application/javascript";
+NSString* _Nonnull const kIQContentTypeApplicationPdf                =   @"application/pdf";
+NSString* _Nonnull const kIQContentTypeApplicationSoapXml            =   @"application/soap+xml";
+NSString* _Nonnull const kIQContentTypeApplicationXml                =   @"application/xml";
+NSString* _Nonnull const kIQContentTypeApplicationZip                =   @"application/zip";
 //For Audio
-NSString *const kIQContentTypeAudioBasic                    =   @"audio/basic";
-NSString *const kIQContentTypeAudioMp4                      =   @"audio/mp4";
-NSString *const kIQContentTypeAudioMpeg                     =   @"audio/mpeg";
-NSString *const kIQContentTypeAudioOgg                      =   @"audio/ogg";
+NSString* _Nonnull const kIQContentTypeAudioBasic                    =   @"audio/basic";
+NSString* _Nonnull const kIQContentTypeAudioMp4                      =   @"audio/mp4";
+NSString* _Nonnull const kIQContentTypeAudioMpeg                     =   @"audio/mpeg";
+NSString* _Nonnull const kIQContentTypeAudioOgg                      =   @"audio/ogg";
 //For image
-NSString *const kIQContentTypeImageGif                      =   @"image/gif";
-NSString *const kIQContentTypeImageJpeg                     =   @"image/jpeg";
-NSString *const kIQContentTypeImagePng                      =   @"image/png";
+NSString* _Nonnull const kIQContentTypeImageGif                      =   @"image/gif";
+NSString* _Nonnull const kIQContentTypeImageJpeg                     =   @"image/jpeg";
+NSString* _Nonnull const kIQContentTypeImagePng                      =   @"image/png";
 //For message
-NSString *const kIQContentTypeMessageHttp                   =   @"message/http";
+NSString* _Nonnull const kIQContentTypeMessageHttp                   =   @"message/http";
 //For multipart
-NSString *const kIQContentTypeMultipartMixed                =   @"multipart/mixed";
-NSString *const kIQContentTypeMultipartAlternative          =   @"multipart/alternative";
-NSString *const kIQContentTypeMultipartRelated              =   @"multipart/related";
-NSString *const kIQContentTypeMultipartFormData             =   @"multipart/form-data";
-NSString *const kIQContentTypeMultipartEncrypted            =   @"multipart/encrypted";
-NSString *const kIQContentTypeBoundary                      =   @"boundary";
+NSString* _Nonnull const kIQContentTypeMultipartMixed                =   @"multipart/mixed";
+NSString* _Nonnull const kIQContentTypeMultipartAlternative          =   @"multipart/alternative";
+NSString* _Nonnull const kIQContentTypeMultipartRelated              =   @"multipart/related";
+NSString* _Nonnull const kIQContentTypeMultipartFormData             =   @"multipart/form-data";
+NSString* _Nonnull const kIQContentTypeMultipartEncrypted            =   @"multipart/encrypted";
+NSString* _Nonnull const kIQContentTypeBoundary                      =   @"boundary";
 //For text
-NSString *const kIQContentTypeTextCmd                       =   @"text/cmd";
-NSString *const kIQContentTypeTextCss                       =   @"text/css";
-NSString *const kIQContentTypeTextCsv                       =   @"text/csv";
-NSString *const kIQContentTypeTextHtml                      =   @"text/html";
-NSString *const kIQContentTypeTextJavaScript                =   @"text/javascript";
-NSString *const kIQContentTypeTextPlain                     =   @"text/plain";
-NSString *const kIQContentTypeTextVCard                     =   @"text/vcard";
-NSString *const kIQContentTypeTextXml                       =   @"text/xml";
+NSString* _Nonnull const kIQContentTypeTextCmd                       =   @"text/cmd";
+NSString* _Nonnull const kIQContentTypeTextCss                       =   @"text/css";
+NSString* _Nonnull const kIQContentTypeTextCsv                       =   @"text/csv";
+NSString* _Nonnull const kIQContentTypeTextHtml                      =   @"text/html";
+NSString* _Nonnull const kIQContentTypeTextJavaScript                =   @"text/javascript";
+NSString* _Nonnull const kIQContentTypeTextPlain                     =   @"text/plain";
+NSString* _Nonnull const kIQContentTypeTextVCard                     =   @"text/vcard";
+NSString* _Nonnull const kIQContentTypeTextXml                       =   @"text/xml";
 //For video
-NSString *const kIQContentTypeVideoMpeg                     =   @"video/mpeg";
-NSString *const kIQContentTypeVideoMp4                      =   @"video/mp4";
-NSString *const kIQContentTypeVideoQuickTime                =   @"video/quicktime";
-NSString *const kIQContentTypeVideoWebm                     =   @"video/webm";
-NSString *const kIQContentTypeVideoXMatroska                =   @"video/x-matroska";
-NSString *const kIQContentTypeVideoXMsWmv                   =   @"video/x-ms-wmv";
-NSString *const kIQContentTypeVideoXFlv                     =   @"video/x-flv";
+NSString* _Nonnull const kIQContentTypeVideoMpeg                     =   @"video/mpeg";
+NSString* _Nonnull const kIQContentTypeVideoMp4                      =   @"video/mp4";
+NSString* _Nonnull const kIQContentTypeVideoQuickTime                =   @"video/quicktime";
+NSString* _Nonnull const kIQContentTypeVideoWebm                     =   @"video/webm";
+NSString* _Nonnull const kIQContentTypeVideoXMatroska                =   @"video/x-matroska";
+NSString* _Nonnull const kIQContentTypeVideoXMsWmv                   =   @"video/x-ms-wmv";
+NSString* _Nonnull const kIQContentTypeVideoXFlv                     =   @"video/x-flv";
 //for charset
-NSString *const kIQContentTypeCharsetUtf8                   =   @"charset=utf-8";
+NSString* _Nonnull const kIQContentTypeCharsetUtf8                   =   @"charset=utf-8";
 
 
 #pragma mark - HTTP method constant strings
-NSString *const kIQHTTPMethodPOST                           =   @"POST";
-NSString *const kIQHTTPMethodGET                            =   @"GET";
-NSString *const kIQHTTPMethodPUT                            =   @"PUT";
-NSString *const kIQHTTPMethodDELETE                         =   @"DELETE";
-NSString *const kIQHTTPMethodHEAD                           =   @"HEAD";
-NSString *const kIQHTTPMethodPATCH                          =   @"PATCH";
+NSString* _Nonnull const kIQHTTPMethodPOST                           =   @"POST";
+NSString* _Nonnull const kIQHTTPMethodGET                            =   @"GET";
+NSString* _Nonnull const kIQHTTPMethodPUT                            =   @"PUT";
+NSString* _Nonnull const kIQHTTPMethodDELETE                         =   @"DELETE";
+NSString* _Nonnull const kIQHTTPMethodHEAD                           =   @"HEAD";
+NSString* _Nonnull const kIQHTTPMethodPATCH                          =   @"PATCH";
 
 
-void printHTTPRequest(NSURLRequest *request)
+void printHTTPRequest(NSURLRequest* _Nonnull request)
 {
     NSMutableString *descriptionString = [[NSMutableString alloc] initWithString:@"HTTP Request:-"];
     
@@ -149,7 +149,7 @@ void printHTTPRequest(NSURLRequest *request)
     NSLog(@"%@\n*********************************\n",descriptionString);
 }
 
-void printURLConnection(IQURLConnection *connection)
+void printURLConnection(IQURLConnection* _Nonnull connection)
 {
     NSMutableString *descriptionString = [[NSMutableString alloc] initWithString:@"HTTP Response:-"];
     
@@ -184,7 +184,7 @@ void printURLConnection(IQURLConnection *connection)
 }
 
 
-NSString* httpURLEncodedString(NSDictionary *parameter)
+NSString* _Nonnull httpURLEncodedString(NSDictionary <NSString *, id> * _Nonnull parameter)
 {
     NSMutableArray *values = [[NSMutableArray alloc] init];
     
@@ -196,22 +196,22 @@ NSString* httpURLEncodedString(NSDictionary *parameter)
     return [values componentsJoinedByString:@"&"];
 }
 
-NSData* httpURLEncodedData(NSDictionary *parameter)
+NSData* _Nonnull httpURLEncodedData(NSDictionary <NSString *, id> * _Nonnull parameter)
 {
     return [httpURLEncodedString(parameter) dataUsingEncoding:NSUTF8StringEncoding];
 }
 
-NSString* jsonEncodedString(NSDictionary *parameter)
+NSString* _Nullable jsonEncodedString(NSDictionary <NSString *, id> * _Nonnull parameter)
 {
     return [[NSString alloc] initWithData:jsonEncodedData(parameter) encoding:NSUTF8StringEncoding];
 }
 
-NSData* jsonEncodedData(NSDictionary *parameter)
+NSData* _Nullable jsonEncodedData(NSDictionary <NSString *, id> * _Nonnull parameter)
 {
     return [NSJSONSerialization dataWithJSONObject:parameter options:0 error:nil];
 }
 
-NSString* MIMETypeForFileAtPath(NSString * filePath)
+NSString* _Nonnull MIMETypeForFileAtPath(NSString* _Nonnull  filePath)
 {
     CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)[filePath pathExtension], NULL);
     CFStringRef MIMEType = UTTypeCopyPreferredTagWithClass (UTI, kUTTagClassMIMEType);
@@ -226,7 +226,7 @@ NSString* MIMETypeForFileAtPath(NSString * filePath)
 
 // generate boundary string
 // adapted from http://developer.apple.com/library/ios/#samplecode/SimpleURLConnections
-NSString *generateRandomBoundaryString(void)
+NSString* _Nonnull generateRandomBoundaryString(void)
 {
     CFUUIDRef       uuid;
     CFStringRef     uuidStr;

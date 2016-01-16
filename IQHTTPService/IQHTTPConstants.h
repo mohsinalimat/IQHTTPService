@@ -1,7 +1,7 @@
 //
 //  IQHTTPConstants.h
 // https://github.com/hackiftekhar/IQHTTPService
-// Copyright (c) 2013-14 Iftekhar Qurashi.
+// Copyright (c) 2013-16 Iftekhar Qurashi.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,15 +24,59 @@
 
 @class UIImage, NSHTTPURLResponse, NSError, NSString, NSData, IQMultipartFormData, IQURLConnection;
 
-#pragma mark - Completion blocks
-/*! @abstract Downloadeded NSData will return through IQDataCompletionBlock */
-typedef void (^IQDictionaryCompletionBlock)(NSDictionary * result, NSError *error);
-typedef void (^IQDataCompletionBlock)(NSData * result, NSError *error);
-typedef void (^IQResponseBlock)(NSHTTPURLResponse* response);
-typedef void (^IQProgressBlock)(CGFloat progress);
-typedef IQMultipartFormData* (^IQMultipartFormDataConstructionBlock)(NSInteger index, BOOL *stop);
+/**
+ Some useful Client error constants
+ */
+enum
+{
+    NSURLClientErrorBadRequest = 400,
+    NSURLClientErrorUnauthorized = 401,
+    NSURLClientErrorPaymentRequired = 402,
+    NSURLClientErrorForbidden = 403,
+    NSURLClientErrorNotFound = 404,
+    NSURLClientErrorMethodNotAllowed = 405,
+    NSURLClientErrorNotAcceptable = 406,
+    NSURLClientErrorProxyAuthenticationRequired = 407,
+    NSURLClientErrorRequestTimeout = 408,
+    NSURLClientErrorConflict = 409,
+    NSURLClientErrorGone = 410,
+    NSURLClientErrorLengthRequired = 411,
+    NSURLClientErrorPreconditionFailed = 412,
+    NSURLClientErrorPayloadTooLarge = 413,
+    NSURLClientErrorRequestURITooLong = 414,
+    NSURLClientErrorUnsupportedMediaType = 415,
+    NSURLClientErrorRequestedRangeNotSatisfiable = 416,
+    NSURLClientErrorExpectationFailed = 417,
+};
 
+/**
+ Some useful Server error constants
+ */
+enum
+{
+    NSURLServerErrorInternalServerError = 500,
+    NSURLServerErrorNotImplemented = 501,
+    NSURLServerErrorBadGateway = 502,
+    NSURLServerErrorServiceUnavailable = 503,
+    NSURLServerErrorGatewayTimeout = 504,
+    NSURLServerErrorHTTPVersionNotSupported = 505,
+};
 
+/**
+ `IQDictionaryCompletionBlock`
+ Used for Dictionary callback when request is completed or failed.
+ 
+ `IQURLConnectionResponseBlock`
+ Used for sending response callback.
+ 
+ `IQURLConnectionProgressBlock`
+ Used for sending data upload/download callbacks.
+ */
+typedef void (^IQDictionaryCompletionBlock)(NSDictionary <NSString *, id> * _Nullable result, NSError* _Nullable error);
+
+/**
+ Request paramter type used to construct httpBody
+ */
 typedef enum IQRequestParameterType
 {
     IQRequestParameterTypeApplicationJSON,
@@ -41,178 +85,178 @@ typedef enum IQRequestParameterType
 
 #pragma mark - HTTP Header field constant strings
 /*! @abstract @"Accept"  */
-extern NSString *const kIQAccept;
+extern NSString* _Nonnull const kIQAccept;
 /*! @abstract @"Accept-Charset"  */
-extern NSString *const kIQAcceptCharset;
+extern NSString* _Nonnull const kIQAcceptCharset;
 /*! @abstract @"Accept-Datetime"  */
-extern NSString *const kIQAcceptDatetime;
+extern NSString* _Nonnull const kIQAcceptDatetime;
 /*! @abstract @"Accept-Encoding"  */
-extern NSString *const kIQAcceptEncoding;
+extern NSString* _Nonnull const kIQAcceptEncoding;
 /*! @abstract @"Accept-Language"  */
-extern NSString *const kIQAcceptLanguage;
+extern NSString* _Nonnull const kIQAcceptLanguage;
 /*! @abstract @"Accept-Ranges"  */
-extern NSString *const kIQAcceptRanges;
+extern NSString* _Nonnull const kIQAcceptRanges;
 /*! @abstract @"Authorization"  */
-extern NSString *const kIQAuthorization;
+extern NSString* _Nonnull const kIQAuthorization;
 /*! @abstract @"Cache-Control"  */
-extern NSString *const kIQCacheControl;
+extern NSString* _Nonnull const kIQCacheControl;
 /*! @abstract @"Connection"  */
-extern NSString *const kIQConnection;
+extern NSString* _Nonnull const kIQConnection;
 /*! @abstract @"Content-Encoding"  */
-extern NSString *const kIQContentEncoding ;
+extern NSString* _Nonnull const kIQContentEncoding ;
 /*! @abstract @"Content-MD5"  */
-extern NSString *const kIQContentMD5;
+extern NSString* _Nonnull const kIQContentMD5;
 /*! @abstract @"Content-Language"  */
-extern NSString *const kIQContentLanguage;
+extern NSString* _Nonnull const kIQContentLanguage;
 /*! @abstract @"Content-Length"  */
-extern NSString *const kIQContentLength;
+extern NSString* _Nonnull const kIQContentLength;
 /*! @abstract @"Content-Location"  */
-extern NSString *const kIQContentLocation;
+extern NSString* _Nonnull const kIQContentLocation;
 /*! @abstract @"Content-Range"  */
-extern NSString *const kIQContentRange;
+extern NSString* _Nonnull const kIQContentRange;
 /*! @abstract @"Content-Type"  */
-extern NSString *const kIQContentType;
+extern NSString* _Nonnull const kIQContentType;
 /*! @abstract @"Cookie"  */
-extern NSString *const kIQCookie;
+extern NSString* _Nonnull const kIQCookie;
 /*! @abstract @"Date"  */
-extern NSString *const kIQDate;
+extern NSString* _Nonnull const kIQDate;
 /*! @abstract @"Expires"  */
-extern NSString *const kIQExpires;
+extern NSString* _Nonnull const kIQExpires;
 /*! @abstract @"Host"  */
-extern NSString *const kIQHost;
+extern NSString* _Nonnull const kIQHost;
 /*! @abstract @"@"Keep-Alive""  */
-extern NSString *const kIQKeepAlive;
+extern NSString* _Nonnull const kIQKeepAlive;
 /*! @abstract @"Last-Modified"  */
-extern NSString *const kIQLastModified;
+extern NSString* _Nonnull const kIQLastModified;
 /*! @abstract @"Proxy-Connection"  */
-extern NSString *const kIQProxyConnection;
+extern NSString* _Nonnull const kIQProxyConnection;
 /*! @abstract @"Range"  */
-extern NSString *const kIQRange;
+extern NSString* _Nonnull const kIQRange;
 /*! @abstract @"Referer"  */
-extern NSString *const kIQReferer;
+extern NSString* _Nonnull const kIQReferer;
 /*! @abstract @"Server"  */
-extern NSString *const kIQServer;
+extern NSString* _Nonnull const kIQServer;
 /*! @abstract @"SOAPAction"  */
-extern NSString *const kIQSOAPAction;
+extern NSString* _Nonnull const kIQSOAPAction;
 /*! @abstract @"Status"  */
-extern NSString *const kIQStatus;
+extern NSString* _Nonnull const kIQStatus;
 /*! @abstract @"User-Agent"  */
-extern NSString *const kIQUserAgent;
+extern NSString* _Nonnull const kIQUserAgent;
 /*! @abstract @"Via"  */
-extern NSString *const kIQVia;
+extern NSString* _Nonnull const kIQVia;
 /*! @abstract @"X-Powered-By"  */
-extern NSString *const kIQXPoweredBy;
+extern NSString* _Nonnull const kIQXPoweredBy;
 
 
 #pragma mark - HTTP method constant strings
 /*! @abstract @"POST"  */
-extern NSString *const kIQHTTPMethodPOST;
+extern NSString* _Nonnull const kIQHTTPMethodPOST;
 /*! @abstract @"GET"  */
-extern NSString *const kIQHTTPMethodGET;
+extern NSString* _Nonnull const kIQHTTPMethodGET;
 /*! @abstract @"PUT"  */
-extern NSString *const kIQHTTPMethodPUT;
+extern NSString* _Nonnull const kIQHTTPMethodPUT;
 /*! @abstract @"DELETE"  */
-extern NSString *const kIQHTTPMethodDELETE;
+extern NSString* _Nonnull const kIQHTTPMethodDELETE;
 /*! @abstract @"HEAD"  */
-extern NSString *const kIQHTTPMethodHEAD;
+extern NSString* _Nonnull const kIQHTTPMethodHEAD;
 /*! @abstract @"PATCH"  */
-extern NSString *const kIQHTTPMethodPATCH;
+extern NSString* _Nonnull const kIQHTTPMethodPATCH;
 
 
 #pragma mark - HTTP Content-Type constant strings
 //For Multipurpose files
 /*! @abstract @"application/x-www-form-urlencoded"  */
-extern NSString *const kIQContentTypeApplicationXWwwFormUrlEncoded;
+extern NSString* _Nonnull const kIQContentTypeApplicationXWwwFormUrlEncoded;
 /*! @abstract @"application/json"  */
-extern NSString *const kIQContentTypeApplicationJson;
+extern NSString* _Nonnull const kIQContentTypeApplicationJson;
 /*! @abstract @"application/javascript"  */
-extern NSString *const kIQContentTypeApplicationJavaScript;
+extern NSString* _Nonnull const kIQContentTypeApplicationJavaScript;
 /*! @abstract @"application/pdf"  */
-extern NSString *const kIQContentTypeApplicationPdf;
+extern NSString* _Nonnull const kIQContentTypeApplicationPdf;
 /*! @abstract @"application/soap+xml"  */
-extern NSString *const kIQContentTypeApplicationSoapXml;
+extern NSString* _Nonnull const kIQContentTypeApplicationSoapXml;
 /*! @abstract @"application/xml"  */
-extern NSString *const kIQContentTypeApplicationXml;
+extern NSString* _Nonnull const kIQContentTypeApplicationXml;
 /*! @abstract @"application/zip"  */
-extern NSString *const kIQContentTypeApplicationZip;
+extern NSString* _Nonnull const kIQContentTypeApplicationZip;
 //For Audio
 /*! @abstract @"audio/basic"  */
-extern NSString *const kIQContentTypeAudioBasic;
+extern NSString* _Nonnull const kIQContentTypeAudioBasic;
 /*! @abstract @"audio/mp4"  */
-extern NSString *const kIQContentTypeAudioMp4;
+extern NSString* _Nonnull const kIQContentTypeAudioMp4;
 /*! @abstract @"audio/mpeg"  */
-extern NSString *const kIQContentTypeAudioMpeg;
+extern NSString* _Nonnull const kIQContentTypeAudioMpeg;
 /*! @abstract @"audio/ogg"  */
-extern NSString *const kIQContentTypeAudioOgg;
+extern NSString* _Nonnull const kIQContentTypeAudioOgg;
 //For image
 /*! @abstract @"image/gif"  */
-extern NSString *const kIQContentTypeImageGif;
+extern NSString* _Nonnull const kIQContentTypeImageGif;
 /*! @abstract @"image/jpeg"  */
-extern NSString *const kIQContentTypeImageJpeg;
+extern NSString* _Nonnull const kIQContentTypeImageJpeg;
 /*! @abstract @"image/png"  */
-extern NSString *const kIQContentTypeImagePng;
+extern NSString* _Nonnull const kIQContentTypeImagePng;
 //For message
 /*! @abstract @"message/http"  */
-extern NSString *const kIQContentTypeMessageHttp;
+extern NSString* _Nonnull const kIQContentTypeMessageHttp;
 //For multipart
 /*! @abstract @"multipart/mixed"  */
-extern NSString *const kIQContentTypeMultipartMixed;
+extern NSString* _Nonnull const kIQContentTypeMultipartMixed;
 /*! @abstract @"multipart/alternative"  */
-extern NSString *const kIQContentTypeMultipartAlternative;
+extern NSString* _Nonnull const kIQContentTypeMultipartAlternative;
 /*! @abstract @"multipart/related"  */
-extern NSString *const kIQContentTypeMultipartRelated;
+extern NSString* _Nonnull const kIQContentTypeMultipartRelated;
 /*! @abstract @"multipart/form-data"  */
-extern NSString *const kIQContentTypeMultipartFormData;
+extern NSString* _Nonnull const kIQContentTypeMultipartFormData;
 /*! @abstract @@"boundary"  */
-extern NSString *const kIQContentTypeBoundary;
+extern NSString* _Nonnull const kIQContentTypeBoundary;
 /*! @abstract @"multipart/encrypted"  */
-extern NSString *const kIQContentTypeMultipartEncrypted;
+extern NSString* _Nonnull const kIQContentTypeMultipartEncrypted;
 //For text
 /*! @abstract @"text/cmd"  */
-extern NSString *const kIQContentTypeTextCmd;
+extern NSString* _Nonnull const kIQContentTypeTextCmd;
 /*! @abstract @"text/css"  */
-extern NSString *const kIQContentTypeTextCss;
+extern NSString* _Nonnull const kIQContentTypeTextCss;
 /*! @abstract @"text/csv"  */
-extern NSString *const kIQContentTypeTextCsv;
+extern NSString* _Nonnull const kIQContentTypeTextCsv;
 /*! @abstract @"text/html"  */
-extern NSString *const kIQContentTypeTextHtml;
+extern NSString* _Nonnull const kIQContentTypeTextHtml;
 /*! @abstract @"text/javascript"  */
-extern NSString *const kIQContentTypeTextJavaScript;
+extern NSString* _Nonnull const kIQContentTypeTextJavaScript;
 /*! @abstract @"text/plain"  */
-extern NSString *const kIQContentTypeTextPlain;
+extern NSString* _Nonnull const kIQContentTypeTextPlain;
 /*! @abstract @"text/vcard"  */
-extern NSString *const kIQContentTypeTextVCard;
+extern NSString* _Nonnull const kIQContentTypeTextVCard;
 /*! @abstract @"text/xml"  */
-extern NSString *const kIQContentTypeTextXml;
+extern NSString* _Nonnull const kIQContentTypeTextXml;
 //For video
 /*! @abstract @"video/mpeg"  */
-extern NSString *const kIQContentTypeVideoMpeg;
+extern NSString* _Nonnull const kIQContentTypeVideoMpeg;
 /*! @abstract @"video/mp4"  */
-extern NSString *const kIQContentTypeVideoMp4;
+extern NSString* _Nonnull const kIQContentTypeVideoMp4;
 /*! @abstract @"video/quicktime"  */
-extern NSString *const kIQContentTypeVideoQuickTime;
+extern NSString* _Nonnull const kIQContentTypeVideoQuickTime;
 /*! @abstract @"video/webm"  */
-extern NSString *const kIQContentTypeVideoWebm;
+extern NSString* _Nonnull const kIQContentTypeVideoWebm;
 /*! @abstract @"video/x-matroska"  */
-extern NSString *const kIQContentTypeVideoXMatroska;
+extern NSString* _Nonnull const kIQContentTypeVideoXMatroska;
 /*! @abstract @"video/x-ms-wmv"  */
-extern NSString *const kIQContentTypeVideoXMsWmv;
+extern NSString* _Nonnull const kIQContentTypeVideoXMsWmv;
 /*! @abstract @"video/x-flv"  */
-extern NSString *const kIQContentTypeVideoXFlv;
+extern NSString* _Nonnull const kIQContentTypeVideoXFlv;
 //For Charset
 /*! @abstract @"charset=utf-8"  */
-extern NSString *const kIQContentTypeCharsetUtf8;
+extern NSString* _Nonnull const kIQContentTypeCharsetUtf8;
 
 
-extern void printHTTPRequest(NSURLRequest *request);
-extern void printURLConnection(IQURLConnection *connection);
+extern void printHTTPRequest(NSURLRequest* _Nonnull request);
+extern void printURLConnection(IQURLConnection* _Nonnull connection);
 
-extern NSString*    httpURLEncodedString(NSDictionary *parameter);
-extern NSData*      httpURLEncodedData(NSDictionary *parameter);
-extern NSString*    jsonEncodedString(NSDictionary *parameter);
-extern NSData*      jsonEncodedData(NSDictionary *parameter);
+extern NSString* _Nonnull   httpURLEncodedString(NSDictionary <NSString *, id> * _Nonnull parameter);
+extern NSData* _Nonnull     httpURLEncodedData(NSDictionary <NSString *, id>* _Nonnull parameter);
+extern NSString* _Nullable  jsonEncodedString(NSDictionary <NSString *, id>* _Nonnull parameter);
+extern NSData* _Nullable    jsonEncodedData(NSDictionary <NSString *, id>* _Nonnull parameter);
 
-extern NSString* MIMETypeForFileAtPath(NSString * filePath);
+extern NSString* _Nonnull   MIMETypeForFileAtPath(NSString* _Nonnull  filePath);
 
-extern NSString *generateRandomBoundaryString(void);
+extern NSString* _Nonnull   generateRandomBoundaryString(void);
 

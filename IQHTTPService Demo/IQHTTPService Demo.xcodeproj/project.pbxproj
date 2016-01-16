@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4CBEC56E1BAE8DBF00117F83 /* NSError+HumanFriendly.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBEC56D1BAE8DBF00117F83 /* NSError+HumanFriendly.m */; settings = {ASSET_TAGS = (); }; };
+		2EF0504E59A9F1EC20EC55D6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AC005449FCDFD5F9E523483 /* libPods.a */; };
 		9D307FB619D02ACD0013BCAD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D307FB519D02ACD0013BCAD /* Foundation.framework */; };
 		9D307FB819D02ACD0013BCAD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D307FB719D02ACD0013BCAD /* CoreGraphics.framework */; };
 		9D307FBA19D02ACD0013BCAD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D307FB919D02ACD0013BCAD /* UIKit.framework */; };
@@ -25,7 +25,6 @@
 		9D30800219D030280013BCAD /* IQHTTPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FFA19D030280013BCAD /* IQHTTPConstants.m */; };
 		9D30800319D030280013BCAD /* IQHTTPService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FFC19D030280013BCAD /* IQHTTPService.m */; };
 		9D30800419D030280013BCAD /* IQMultipartFormData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D307FFE19D030280013BCAD /* IQMultipartFormData.m */; };
-		9D30800519D030280013BCAD /* IQURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D30800119D030280013BCAD /* IQURLConnection.m */; };
 		C0DD7F5A1A72B3D000F3E46C /* test1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C0DD7F591A72B3D000F3E46C /* test1.jpeg */; };
 		C0DD7F5E1A72B5C600F3E46C /* TestHTTPService.m in Sources */ = {isa = PBXBuildFile; fileRef = C0DD7F5D1A72B5C600F3E46C /* TestHTTPService.m */; };
 		C0DD7F611A72B8CA00F3E46C /* FileUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0DD7F601A72B8CA00F3E46C /* FileUploadViewController.m */; };
@@ -45,8 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4CBEC56C1BAE8DBF00117F83 /* NSError+HumanFriendly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+HumanFriendly.h"; sourceTree = "<group>"; };
-		4CBEC56D1BAE8DBF00117F83 /* NSError+HumanFriendly.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+HumanFriendly.m"; sourceTree = "<group>"; };
+		15C209B5447E9A34CFC8DB7E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		3AC005449FCDFD5F9E523483 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D307FB219D02ACD0013BCAD /* IQHTTPService Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IQHTTPService Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D307FB519D02ACD0013BCAD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9D307FB719D02ACD0013BCAD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -72,8 +71,7 @@
 		9D307FFC19D030280013BCAD /* IQHTTPService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQHTTPService.m; sourceTree = "<group>"; };
 		9D307FFD19D030280013BCAD /* IQMultipartFormData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQMultipartFormData.h; sourceTree = "<group>"; };
 		9D307FFE19D030280013BCAD /* IQMultipartFormData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQMultipartFormData.m; sourceTree = "<group>"; };
-		9D30800019D030280013BCAD /* IQURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQURLConnection.h; sourceTree = "<group>"; };
-		9D30800119D030280013BCAD /* IQURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQURLConnection.m; sourceTree = "<group>"; };
+		A22C7ACA236FAAA2C276CEAB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C0DD7F591A72B3D000F3E46C /* test1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test1.jpeg; sourceTree = "<group>"; };
 		C0DD7F5C1A72B5C600F3E46C /* TestHTTPService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHTTPService.h; sourceTree = "<group>"; };
 		C0DD7F5D1A72B5C600F3E46C /* TestHTTPService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestHTTPService.m; sourceTree = "<group>"; };
@@ -94,6 +92,7 @@
 				9D307FB819D02ACD0013BCAD /* CoreGraphics.framework in Frameworks */,
 				9D307FBA19D02ACD0013BCAD /* UIKit.framework in Frameworks */,
 				9D307FB619D02ACD0013BCAD /* Foundation.framework in Frameworks */,
+				2EF0504E59A9F1EC20EC55D6 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +118,7 @@
 				9D307FDA19D02ACD0013BCAD /* IQHTTPService DemoTests */,
 				9D307FB419D02ACD0013BCAD /* Frameworks */,
 				9D307FB319D02ACD0013BCAD /* Products */,
+				B1DF65364076F6B9EEC93602 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -138,6 +138,7 @@
 				9D307FB719D02ACD0013BCAD /* CoreGraphics.framework */,
 				9D307FB919D02ACD0013BCAD /* UIKit.framework */,
 				9D307FD419D02ACD0013BCAD /* XCTest.framework */,
+				3AC005449FCDFD5F9E523483 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -202,21 +203,18 @@
 				9D307FFC19D030280013BCAD /* IQHTTPService.m */,
 				9D307FFD19D030280013BCAD /* IQMultipartFormData.h */,
 				9D307FFE19D030280013BCAD /* IQMultipartFormData.m */,
-				4CBEC56C1BAE8DBF00117F83 /* NSError+HumanFriendly.h */,
-				4CBEC56D1BAE8DBF00117F83 /* NSError+HumanFriendly.m */,
-				9D307FFF19D030280013BCAD /* IQURLConnection */,
 			);
 			name = IQHTTPService;
 			path = ../IQHTTPService;
 			sourceTree = "<group>";
 		};
-		9D307FFF19D030280013BCAD /* IQURLConnection */ = {
+		B1DF65364076F6B9EEC93602 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9D30800019D030280013BCAD /* IQURLConnection.h */,
-				9D30800119D030280013BCAD /* IQURLConnection.m */,
+				15C209B5447E9A34CFC8DB7E /* Pods.debug.xcconfig */,
+				A22C7ACA236FAAA2C276CEAB /* Pods.release.xcconfig */,
 			);
-			path = IQURLConnection;
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		C0DD7F5B1A72B5B500F3E46C /* TestHTTPService */ = {
@@ -235,9 +233,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9D307FE419D02ACD0013BCAD /* Build configuration list for PBXNativeTarget "IQHTTPService Demo" */;
 			buildPhases = (
+				D41BFC474ADA5498D97093C9 /* Check Pods Manifest.lock */,
 				9D307FAE19D02ACD0013BCAD /* Sources */,
 				9D307FAF19D02ACD0013BCAD /* Frameworks */,
 				9D307FB019D02ACD0013BCAD /* Resources */,
+				6DE31ED39B9E815F0BC8CF69 /* Embed Pods Frameworks */,
+				E8A594B868B46E1AECD0C80B /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -272,7 +273,7 @@
 		9D307FAA19D02ACD0013BCAD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = Iftekhar;
 				TargetAttributes = {
 					9D307FD219D02ACD0013BCAD = {
@@ -322,6 +323,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6DE31ED39B9E815F0BC8CF69 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D41BFC474ADA5498D97093C9 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E8A594B868B46E1AECD0C80B /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9D307FAE19D02ACD0013BCAD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -329,7 +378,6 @@
 			files = (
 				C0DD7F611A72B8CA00F3E46C /* FileUploadViewController.m in Sources */,
 				C0DD7F671A72BAC000F3E46C /* PostJSONViewController.m in Sources */,
-				4CBEC56E1BAE8DBF00117F83 /* NSError+HumanFriendly.m in Sources */,
 				9D30800419D030280013BCAD /* IQMultipartFormData.m in Sources */,
 				C0DD7F641A72BAA000F3E46C /* HelloWorldViewController.m in Sources */,
 				9D307FCC19D02ACD0013BCAD /* TableViewController.m in Sources */,
@@ -337,7 +385,6 @@
 				9D307FC619D02ACD0013BCAD /* AppDelegate.m in Sources */,
 				9D307FC219D02ACD0013BCAD /* main.m in Sources */,
 				C0DD7F5E1A72B5C600F3E46C /* TestHTTPService.m in Sources */,
-				9D30800519D030280013BCAD /* IQURLConnection.m in Sources */,
 				9D30800219D030280013BCAD /* IQHTTPConstants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -421,7 +468,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -453,7 +500,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -461,12 +508,15 @@
 		};
 		9D307FE519D02ACD0013BCAD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 15C209B5447E9A34CFC8DB7E /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IQHTTPService Demo/IQHTTPService Demo-Prefix.pch";
 				INFOPLIST_FILE = "IQHTTPService Demo/IQHTTPService Demo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.iftekhar.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -474,12 +524,15 @@
 		};
 		9D307FE619D02ACD0013BCAD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A22C7ACA236FAAA2C276CEAB /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IQHTTPService Demo/IQHTTPService Demo-Prefix.pch";
 				INFOPLIST_FILE = "IQHTTPService Demo/IQHTTPService Demo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.iftekhar.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -501,6 +554,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "IQHTTPService DemoTests/IQHTTPService DemoTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.iftekhar.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -519,6 +573,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IQHTTPService Demo/IQHTTPService Demo-Prefix.pch";
 				INFOPLIST_FILE = "IQHTTPService DemoTests/IQHTTPService DemoTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.iftekhar.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;

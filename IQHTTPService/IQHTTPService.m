@@ -1,7 +1,7 @@
 //
 //  IQHTTPService.m
 // https://github.com/hackiftekhar/IQHTTPService
-// Copyright (c) 2013-14 Iftekhar Qurashi.
+// Copyright (c) 2013-16 Iftekhar Qurashi.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,18 +25,20 @@
 #import "IQHTTPService.h"
 
 @implementation IQHTTPService
-{
-    NSMutableDictionary *defaultHeaders;
-}
 
-@synthesize logEnabled = _logEnabled;
+//Subclass must override this method and return the API path override this method.
+-(NSString*)endpointAPIPathString
+{
+    [NSException raise:NSInternalInconsistencyException format:@"You must override %@ method in %@ class",NSStringFromSelector(_cmd),NSStringFromClass([self class])];
+    return nil;
+}
 
 - (instancetype)init
 {
     self = [super init];
     if (self)
     {
-        defaultHeaders = [[NSMutableDictionary alloc] init];
+        _defaultHeaders = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -82,31 +84,9 @@
     return _logEnabled;
 }
 
-+(void)filterResult:(NSDictionary**)dict error:(NSError**)error response:(NSHTTPURLResponse*)response
++(void)filterResult:(id _Nullable * _Nullable)dict error:(NSError* _Nullable * _Nullable)error response:(NSHTTPURLResponse* _Nullable)response
 {
 
-}
-
--(NSString*)headerForField:(NSString*)headerField
-{
-    return [defaultHeaders objectForKey:headerField];
-}
-
--(void)addDefaultHeaderValue:(NSString*)header forHeaderField:(NSString*)headerField
-{
-    if (header)
-    {
-        [defaultHeaders setObject:header forKey:headerField];
-    }
-    else
-    {
-        [self removeDefaultHeaderForField:headerField];
-    }
-}
-
--(void)removeDefaultHeaderForField:(NSString*)headerField
-{
-    [defaultHeaders removeObjectForKey:headerField];
 }
 
 -(void)setAuthorizationHeaderWithUsername:(NSString *)username password:(NSString *)password
@@ -127,118 +107,37 @@
 #pragma clang diagnostic pop
     }
     
-    [self addDefaultHeaderValue:[NSString stringWithFormat:@"Basic %@", base64String] forHeaderField:kIQAuthorization];
+    [self.defaultHeaders setObject:[NSString stringWithFormat:@"Basic %@", base64String] forKey:kIQAuthorization];
 }
 
 -(void)setAuthorizationHeaderWithToken:(NSString *)token;
 {
-    [self addDefaultHeaderValue:[NSString stringWithFormat:@"Token token=\"%@\"", token] forHeaderField:kIQAuthorization];
-}
-
-#pragma mark -
-#pragma mark - Asynchronous Requests
-
-- (IQURLConnection*)requestWithPath:(NSString*)path httpMethod:(NSString*)method parameter:(NSDictionary*)parameter completionHandler:(IQDictionaryCompletionBlock)completionHandler
-{
-    __block IQURLConnection *connection = [self requestWithPath:path httpMethod:method parameter:parameter dataCompletionHandler:^(NSData *result, NSError *error) {
-        
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:result options:0 error:nil];
-        
-        [[self class] filterResult:&dict error:&error response:connection.response];
-        
-        if (completionHandler)
-        {
-            completionHandler(dict,error);
-        }
-        
-    }];
-    
-    return connection;
-}
-
--(IQURLConnection*)requestWithPath:(NSString*)path httpMethod:(NSString*)method parameter:(NSDictionary*)parameter dataCompletionHandler:(IQDataCompletionBlock)completionHandler
-{
-    NSURL *url = nil;
-    NSData *httpBody = nil;
-    
-    if ([method isEqualToString:kIQHTTPMethodGET])
-    {
-        NSMutableString *parameterString = [[NSMutableString alloc] init];
-        if ([path hasSuffix:@"?"] == NO && [parameter count])
-            [parameterString appendString:@"?"];
-        
-        [parameterString appendString:httpURLEncodedString(parameter)];
-        
-        url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@%@",self.serverURL,path,parameterString] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-    }
-    else if ([method isEqualToString:kIQHTTPMethodPOST] || [method isEqualToString:kIQHTTPMethodPUT] || [method isEqualToString:kIQHTTPMethodDELETE] || [method isEqualToString:kIQHTTPMethodPATCH] || [method isEqualToString:kIQHTTPMethodHEAD])
-    {
-        url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@",self.serverURL,path] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-        
-        NSData *originalData;
-        
-        if (self.parameterType == IQRequestParameterTypeApplicationJSON)
-        {
-            if (parameter)  originalData = [NSJSONSerialization dataWithJSONObject:parameter options:0 error:nil];
-        }
-        else if (self.parameterType == IQRequestParameterTypeApplicationXWwwFormUrlEncoded)
-        {
-            if (parameter)
-            {
-                originalData = httpURLEncodedData(parameter);
-            }
-        }
-        
-        if ([originalData length])
-        {
-            NSMutableData *editedData = [[NSMutableData alloc] init];
-            
-            if (originalData)       [editedData appendData:originalData];
-            
-            httpBody = editedData;
-        }
-    }
-    
-    return [self requestWithURL:url httpMethod:method contentType:self.defaultContentType httpBody:httpBody dataCompletionHandler:completionHandler];
+    [self.defaultHeaders setObject:[NSString stringWithFormat:@"Token token=\"%@\"", token] forKey:kIQAuthorization];
 }
 
 
--(IQURLConnection*)requestWithPath:(NSString*)path httpMethod:(NSString*)method contentType:(NSString*)contentType httpBody:(NSData*)httpBody completionHandler:(IQDictionaryCompletionBlock)completionHandler
-{
-    __block IQURLConnection *connection = [self requestWithPath:path httpMethod:method contentType:contentType httpBody:httpBody dataCompletionHandler:^(NSData *result, NSError *error) {
-        
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:result options:0 error:nil];
-        
-        [[self class] filterResult:&dict error:&error response:connection.response];
-        
-        if (completionHandler)
-        {
-            completionHandler(dict,error);
-        }
-    }];
-    
-    return connection;
-}
 
--(IQURLConnection*)requestWithPath:(NSString*)path httpMethod:(NSString*)method contentType:(NSString*)contentType httpBody:(NSData*)httpBody dataCompletionHandler:(IQDataCompletionBlock)completionHandler
-{
-    return [self requestWithURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@%@",self.serverURL,path] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]] httpMethod:method contentType:contentType httpBody:httpBody dataCompletionHandler:completionHandler];
-}
+///----------------------------
+/// @name Private helpers
+///----------------------------
 
-
--(IQURLConnection*)requestWithURL:(NSURL*)url httpMethod:(NSString*)method contentType:(NSString*)contentType httpBody:(NSData*)httpBody dataCompletionHandler:(IQDataCompletionBlock)completionHandler
+-(IQURLConnection*)requestWithURL:(NSURL*)url
+                       httpMethod:(NSString*)method
+                      contentType:(NSString*)contentType
+                         httpBody:(NSData*)httpBody
+            dataCompletionHandler:(IQURLConnectionDataCompletionBlock)completionHandler
 {
     NSMutableURLRequest *request = [IQHTTPService requestWithURL:url httpMethod:method contentType:contentType body:httpBody];
     
     //Adding headers
     {
-        [request setAllHTTPHeaderFields:defaultHeaders];
+        [request setAllHTTPHeaderFields:self.defaultHeaders];
     }
     
     if (_logEnabled)
-	{
+    {
         printHTTPRequest(request);
-	}
+    }
     
     __block IQURLConnection *connection = [IQURLConnection sendAsynchronousRequest:request responseBlock:NULL uploadProgressBlock:NULL downloadProgressBlock:NULL completionHandler:^(NSData *result, NSError *error) {
         
@@ -258,183 +157,41 @@
     return connection;
 }
 
-- (IQURLConnection*)requestWithPath:(NSString*)path parameter:(NSDictionary*)parameter multipartFormData:(IQMultipartFormData*)multipartFormData uploadProgressBlock:(IQProgressBlock)uploadProgress completionHandler:(IQDictionaryCompletionBlock)completionHandler
-{
-    return [self requestWithPath:path
-                       parameter:parameter
-              multipartFormDatas:(multipartFormData) ? @[multipartFormData] : @[]
-             uploadProgressBlock:uploadProgress
-               completionHandler:completionHandler];
-}
-
--(IQURLConnection*)requestWithPath:(NSString*)path parameter:(NSDictionary*)parameter multipartFormDatas:(NSArray*)multipartFormDatas uploadProgressBlock:(IQProgressBlock)uploadProgress completionHandler:(IQDictionaryCompletionBlock)completionHandler
-{
-    return [self requestWithPath:path parameter:parameter httpMethod:kIQHTTPMethodPOST multipartFormDatas:multipartFormDatas uploadProgressBlock:uploadProgress completionHandler:completionHandler];
-}
-
--(IQURLConnection*)requestWithPath:(NSString*)path
-                         parameter:(NSDictionary*)parameter
-                        httpMethod:(NSString*)method
-                multipartFormDatas:(NSArray*)multipartFormDatas //Array of IQMultipartFormData objects to upload
-               uploadProgressBlock:(IQProgressBlock)uploadProgress
-                 completionHandler:(IQDictionaryCompletionBlock)completionHandler
-{
-    
-    return [self requestWithPath:path parameter:parameter method:method dataConstructionBlock:^IQMultipartFormData *(NSInteger index, BOOL *stop) {
-        
-        if (multipartFormDatas.count>index)
-        {
-            return multipartFormDatas[index];
-        }
-        else
-        {
-            *stop = YES;
-            return nil;
-        }
-        
-    } uploadProgressBlock:uploadProgress completionHandler:completionHandler];
-}
-
-
--(IQURLConnection*)requestWithPath:(NSString*)path parameter:(NSDictionary*)parameter dataConstructionBlock:(IQMultipartFormDataConstructionBlock)dataConstructionBlock uploadProgressBlock:(IQProgressBlock)uploadProgress completionHandler:(IQDictionaryCompletionBlock)completionHandler
-{
-    return [self requestWithPath:path parameter:parameter method:kIQHTTPMethodPOST dataConstructionBlock:dataConstructionBlock uploadProgressBlock:uploadProgress completionHandler:completionHandler];
-}
-
--(IQURLConnection*)requestWithPath:(NSString*)path parameter:(NSDictionary*)parameter method:(NSString*)method dataConstructionBlock:(IQMultipartFormDataConstructionBlock)dataConstructionBlock uploadProgressBlock:(IQProgressBlock)uploadProgress completionHandler:(IQDictionaryCompletionBlock)completionHandler
-{
-    NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@",self.serverURL,path] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-    [request setHTTPMethod:method];
-    
-    //Adding headers
-    {
-        [request setAllHTTPHeaderFields:defaultHeaders];
-    }
-    
-    NSString *boundary = generateRandomBoundaryString();
-    
-    //Set Content-Type
-    {
-        NSString *contentType =[NSString stringWithFormat:@"%@; %@=%@",kIQContentTypeMultipartFormData, kIQContentTypeBoundary, boundary];
-        [request setValue:contentType forHTTPHeaderField:kIQContentType];
-    }
-    
-    NSMutableString *loggingMultipartString = [[NSMutableString alloc] init];  //  For logging purpose
-
-    //Set HTTPBody
-    {
-        __block NSMutableString *parameterAttributes = [[NSMutableString alloc] init];
-        
-        //Append Key-Value
-        [parameter enumerateKeysAndObjectsUsingBlock:^(NSString *parameterKey, NSString *parameterValue, BOOL *stop)
-         {
-             [parameterAttributes appendFormat:@"--%@\r\n",boundary];
-             [parameterAttributes appendFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",parameterKey];
-             [parameterAttributes appendFormat:@"%@\r\n",parameterValue];
-         }];
-        
-        NSMutableData *fileParameterData = [NSMutableData data];
-        [loggingMultipartString appendString:parameterAttributes];
-        
-        if (dataConstructionBlock)
-        {
-            BOOL *shouldStop = malloc(sizeof(BOOL));
-            *shouldStop = NO;
-            
-            //Index to notify on block
-            NSInteger index = 0;
-            
-            while (*shouldStop == NO)
-            {
-                IQMultipartFormData *formData = dataConstructionBlock(index, shouldStop);
-                
-                if (formData == nil)
-                {
-                    *shouldStop = YES;
-                }
-                else
-                {
-                    index++;
-                    
-                    NSMutableString *attributes = [[NSMutableString alloc] initWithFormat:@"--%@\r\n",boundary];
-                    [attributes appendFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n",formData.keyName,formData.fileName];
-                    [attributes appendFormat:@"Content-Type: %@\r\n",formData.mimeType];
-                    
-                    for (NSString *key in formData.additionalFileAttributes)
-                    {
-                        NSString *value = [formData.additionalFileAttributes objectForKey:key];
-                        [attributes appendFormat:@"%@: %@\r\n",key,value];
-                    }
-                    
-                    [attributes appendString:@"\r\n"];
-
-                    
-                    [fileParameterData appendData:[attributes dataUsingEncoding:NSUTF8StringEncoding]];
-                    [fileParameterData appendData:formData.data];
-                    [fileParameterData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-                    
-                    [loggingMultipartString appendString:attributes];
-                    [loggingMultipartString appendFormat:@"*** Raw Data of %@ ***",formData.fileName];
-                    [loggingMultipartString appendString:@"\r\n"];
-                }
-            }
-        }
-
-        NSString *closingBoundaryString = [NSString stringWithFormat:@"--%@--\r\n", boundary];
-        [loggingMultipartString appendString:closingBoundaryString];
-        
-        NSMutableData *httpBody = [NSMutableData data];
-        [httpBody appendData:[parameterAttributes dataUsingEncoding:NSUTF8StringEncoding]];
-        [httpBody appendData:fileParameterData];
-        [httpBody appendData:[closingBoundaryString dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        request.HTTPBody = httpBody;
-        
-        [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[httpBody length]] forHTTPHeaderField:@"Content-Length"];
-    }
-    
-    if (_logEnabled)
-	{
-        printHTTPRequest(request);
-        NSLog(@"Request Body:- \n%@\n*********************************\n",loggingMultipartString);
-	}
-    
-    __block IQURLConnection *connection = [IQURLConnection sendAsynchronousRequest:request responseBlock:NULL uploadProgressBlock:uploadProgress downloadProgressBlock:NULL completionHandler:^(NSData *result, NSError *error) {
-        
-        if (_logEnabled)
-        {
-            printURLConnection(connection);
-        }
-        
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:result options:0 error:nil];
-        
-        [[self class] filterResult:&dict error:&error response:connection.response];
-        
-        if (completionHandler)
-        {
-            completionHandler(dict,error);
-        }
-    }];
-    
-    completionHandler = NULL;
-    
-    return connection;
-}
-
-
 #pragma mark -
-#pragma mark - Synchronous Requests
+#pragma mark - Private Helper methods
 
--(NSDictionary*)synchronousRequestWithPath:(NSString*)path httpMethod:(NSString*)method parameter:(NSDictionary*)parameter error:(NSError**)error
++(NSMutableURLRequest*)requestWithURL:(NSURL*)url
+                           httpMethod:(NSString*)httpMethod
+                          contentType:(NSString*)contentType
+                                 body:(NSData*)body
 {
-    NSData *data = [self synchronousDataRequestWithPath:path httpMethod:method parameter:parameter error:error];
-    
-    return [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    if (url != nil)
+    {
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:300];
+        
+        if ([httpMethod length])    [request setHTTPMethod:httpMethod];
+        if ([contentType length])   [request addValue:contentType forHTTPHeaderField:kIQContentType];
+        if ([body length])
+        {
+            [request setHTTPBody:body];
+            [request addValue:[NSString stringWithFormat:@"%lu",(unsigned long)[body length]] forHTTPHeaderField:kIQContentLength];
+        }
+        return request;
+    }
+    else
+    {
+        return nil;
+    }
 }
 
--(NSData*)synchronousDataRequestWithPath:(NSString*)path httpMethod:(NSString*)method parameter:(NSDictionary*)parameter error:(NSError**)error
+///----------------------------
+/// @name Asynchronous Requests
+///----------------------------
+
+-(IQURLConnection* _Nonnull)requestWithPath:(NSString* _Nonnull)path
+                                 httpMethod:(NSString* _Nullable)method
+                                  parameter:(NSDictionary* _Nullable)parameter
+                          completionHandler:(IQDictionaryCompletionBlock _Nullable)completionHandler
 {
     NSURL *url = nil;
     NSData *httpBody = nil;
@@ -447,11 +204,11 @@
         
         [parameterString appendString:httpURLEncodedString(parameter)];
         
-        url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@%@",self.serverURL,path,parameterString] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+        url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@%@",[self endpointAPIPathString],path,parameterString] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
     }
-    else if ([method isEqualToString:kIQHTTPMethodPOST] || [method isEqualToString:kIQHTTPMethodPUT] || [method isEqualToString:kIQHTTPMethodDELETE])
+    else if ([method isEqualToString:kIQHTTPMethodPOST] || [method isEqualToString:kIQHTTPMethodPUT] || [method isEqualToString:kIQHTTPMethodDELETE] || [method isEqualToString:kIQHTTPMethodPATCH] || [method isEqualToString:kIQHTTPMethodHEAD])
     {
-        url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@",self.serverURL,path] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+        url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@",[self endpointAPIPathString],path] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
         
         NSData *originalData;
         
@@ -477,60 +234,107 @@
         }
     }
     
-    return [self synchronousRequestWithURL:url httpMethod:method contentType:self.defaultContentType httpBody:httpBody error:error];
-}
-
--(NSDictionary*)synchronousRequestWithPath:(NSString*)path httpMethod:(NSString*)method contentType:(NSString*)contentType httpBody:(NSData*)httpBody error:(NSError**)error
-{
-    NSData *data = [self synchronousDataRequestWithPath:path httpMethod:method contentType:contentType httpBody:httpBody error:error];
-    
-    return [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-}
-
--(NSData*)synchronousDataRequestWithPath:(NSString*)path httpMethod:(NSString*)method contentType:(NSString*)contentType httpBody:(NSData*)httpBody error:(NSError**)error
-{
-    return [self synchronousRequestWithURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@%@",self.serverURL,path] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]] httpMethod:method contentType:contentType httpBody:httpBody error:error];
-}
-
--(NSData*)synchronousRequestWithURL:(NSURL*)url httpMethod:(NSString*)method contentType:(NSString*)contentType httpBody:(NSData*)httpBody error:(NSError**)error
-{
-    NSMutableURLRequest *request = [IQHTTPService requestWithURL:url httpMethod:method contentType:contentType body:httpBody];
-    
-    //Adding headers
-    {
-        [request setAllHTTPHeaderFields:defaultHeaders];
-    }
-    
-    if (_logEnabled)
-	{
-        printHTTPRequest(request);
-	}
-    
-    return [IQURLConnection sendSynchronousRequest:request returningResponse:NULL error:error];
-}
-
-#pragma mark -
-#pragma mark - Private Helper methods
-
-+(NSMutableURLRequest*)requestWithURL:(NSURL*)url httpMethod:(NSString*)httpMethod contentType:(NSString*)contentType body:(NSData*)body
-{
-    if (url != nil)
-    {
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:300];
+    __block IQURLConnection *connection = [self requestWithURL:url httpMethod:method contentType:self.defaultContentType httpBody:httpBody dataCompletionHandler:^(NSData *result, NSError *error) {
         
-        if ([httpMethod length])    [request setHTTPMethod:httpMethod];
-        if ([contentType length])   [request addValue:contentType forHTTPHeaderField:kIQContentType];
-        if ([body length])
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:result options:0 error:nil];
+        
+        [[self class] filterResult:&dict error:&error response:connection.response];
+        
+        if (completionHandler)
         {
-            [request setHTTPBody:body];
-            [request addValue:[NSString stringWithFormat:@"%lu",(unsigned long)[body length]] forHTTPHeaderField:kIQContentLength];
+            completionHandler(dict,error);
         }
-        return request;
-    }
-    else
+    }];
+
+    return connection;
+}
+
+-(IQURLConnection* _Nonnull)requestWithPath:(NSString* _Nonnull)path
+                                 httpMethod:(NSString* _Nullable)method
+                                contentType:(NSString* _Nullable)contentType
+                                   httpBody:(NSData* _Nullable)httpBody
+                          completionHandler:(IQDictionaryCompletionBlock _Nullable)completionHandler
+{
+    NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@",[self endpointAPIPathString],path] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+
+    __block IQURLConnection *connection = [self requestWithURL:url httpMethod:method contentType:contentType httpBody:httpBody dataCompletionHandler:^(NSData *result, NSError *error) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:result options:0 error:nil];
+        
+        [[self class] filterResult:&dict error:&error response:connection.response];
+        
+        if (completionHandler)
+        {
+            completionHandler(dict,error);
+        }
+    }];
+    
+    return connection;
+}
+
+///----------------------------
+/// @name Asynchronous File Requests
+///----------------------------
+
+-(IQURLConnection* _Nonnull)requestWithPath:(NSString* _Nonnull)path
+                                 httpMethod:(NSString* _Nullable)method
+                                  parameter:(NSDictionary* _Nullable)parameter
+                         multipartFormDatas:(NSArray <IQMultipartFormData *>  * _Nonnull)multipartFormDatas
+                          completionHandler:(IQDictionaryCompletionBlock _Nullable)completionHandler
+{
+    NSString *boundary = generateRandomBoundaryString();
+    
+    NSMutableString *loggingMultipartString = [[NSMutableString alloc] init];  //  For logging purpose
+    
+    //Set HTTPBody
+    __block NSMutableString *parameterAttributes = [[NSMutableString alloc] init];
+    
+    //Append Key-Value
+    [parameter enumerateKeysAndObjectsUsingBlock:^(NSString *parameterKey, NSString *parameterValue, BOOL *stop)
+     {
+         [parameterAttributes appendFormat:@"--%@\r\n",boundary];
+         [parameterAttributes appendFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",parameterKey];
+         [parameterAttributes appendFormat:@"%@\r\n",parameterValue];
+     }];
+    
+    NSMutableData *fileParameterData = [NSMutableData data];
+    [loggingMultipartString appendString:parameterAttributes];
+    
+    for (IQMultipartFormData *formData in multipartFormDatas)
     {
-        return nil;
+        NSMutableString *attributes = [[NSMutableString alloc] initWithFormat:@"--%@\r\n",boundary];
+        [attributes appendFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n",formData.keyName,formData.fileName];
+        [attributes appendFormat:@"Content-Type: %@\r\n",formData.mimeType];
+        
+        for (NSString *key in formData.additionalFileAttributes)
+        {
+            NSString *value = [formData.additionalFileAttributes objectForKey:key];
+            [attributes appendFormat:@"%@: %@\r\n",key,value];
+        }
+        
+        [attributes appendString:@"\r\n"];
+        
+        
+        [fileParameterData appendData:[attributes dataUsingEncoding:NSUTF8StringEncoding]];
+        [fileParameterData appendData:formData.data];
+        [fileParameterData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [loggingMultipartString appendString:attributes];
+        [loggingMultipartString appendFormat:@"*** Raw Data of %@ ***",formData.fileName];
+        [loggingMultipartString appendString:@"\r\n"];
     }
+    
+    NSString *closingBoundaryString = [NSString stringWithFormat:@"--%@--\r\n", boundary];
+    [loggingMultipartString appendString:closingBoundaryString];
+    
+    NSMutableData *httpBody = [NSMutableData data];
+    [httpBody appendData:[parameterAttributes dataUsingEncoding:NSUTF8StringEncoding]];
+    [httpBody appendData:fileParameterData];
+    [httpBody appendData:[closingBoundaryString dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSString *contentType =[NSString stringWithFormat:@"%@; %@=%@",kIQContentTypeMultipartFormData, kIQContentTypeBoundary, boundary];
+
+    return [self requestWithPath:path httpMethod:method contentType:contentType httpBody:httpBody completionHandler:completionHandler];
 }
 
 @end

@@ -26,11 +26,7 @@
 
 @interface IQURLConnection ()
 {
-    IQDataCompletionBlock   _dataCompletionBlock;
-    
     NSMutableData *_data;
-    
-    CGFloat _expectedContentLength;
 }
 
 @end
@@ -48,15 +44,29 @@ static NSOperationQueue *queue;
     queue = [[NSOperationQueue alloc] init];
 }
 
-+ (IQURLConnection*)sendAsynchronousRequest:(NSMutableURLRequest *)request responseBlock:(IQResponseBlock)responseBlock uploadProgressBlock:(IQProgressBlock)uploadProgress downloadProgressBlock:(IQProgressBlock)downloadProgress completionHandler:(IQDataCompletionBlock)completion
++ (IQURLConnection*)sendAsynchronousRequest:(NSMutableURLRequest *)request
+                              responseBlock:(IQURLConnectionResponseBlock)responseBlock
+                        uploadProgressBlock:(IQURLConnectionProgressBlock)uploadProgress
+                      downloadProgressBlock:(IQURLConnectionProgressBlock)downloadProgress
+                          completionHandler:(IQURLConnectionDataCompletionBlock)completion
 {
-    IQURLConnection *asyncRequest = [[IQURLConnection alloc] initWithRequest:request resumeData:nil responseBlock:responseBlock uploadProgressBlock:uploadProgress downloadProgressBlock:downloadProgress completionBlock:completion];
+    IQURLConnection *asyncRequest = [[IQURLConnection alloc] initWithRequest:request
+                                                                  resumeData:nil
+                                                               responseBlock:responseBlock
+                                                         uploadProgressBlock:uploadProgress
+                                                       downloadProgressBlock:downloadProgress
+                                                             completionBlock:completion];
     [asyncRequest start];
     
     return asyncRequest;
 }
 
-- (instancetype)initWithRequest:(NSMutableURLRequest *)request resumeData:(NSData*)dataToResume responseBlock:(IQResponseBlock)responseBlock uploadProgressBlock:(IQProgressBlock)uploadProgress downloadProgressBlock:(IQProgressBlock)downloadProgress completionBlock:(IQDataCompletionBlock)completion
+- (instancetype)initWithRequest:(NSMutableURLRequest *)request
+                     resumeData:(NSData*)dataToResume
+                  responseBlock:(IQURLConnectionResponseBlock)responseBlock
+            uploadProgressBlock:(IQURLConnectionProgressBlock)uploadProgress
+          downloadProgressBlock:(IQURLConnectionProgressBlock)downloadProgress
+                completionBlock:(IQURLConnectionDataCompletionBlock)completion
 {
     if ([dataToResume length])
     {
@@ -75,6 +85,25 @@ static NSOperationQueue *queue;
         _expectedContentLength = NSURLResponseUnknownLength;
     }
     return self;
+}
+
+-(NSCachedURLResponse *)cachedURLResponse
+{
+    return [[NSURLCache sharedURLCache] cachedResponseForRequest:self.originalRequest];
+}
+
+-(NSDictionary *)cachedDictionaryResponse
+{
+    NSData *data = [[self cachedURLResponse] data];
+    
+    if (data)
+    {
+        return [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 -(NSData *)responseData
@@ -157,28 +186,32 @@ static NSOperationQueue *queue;
 {
     _response = response;
     
-    _expectedContentLength = NSURLResponseUnknownLength;
-	NSDictionary *headers = [response allHeaderFields];
-	if (headers)
+    NSDictionary *headers = [response allHeaderFields];
+    if (headers)
     {
-		if (headers[@"Content-Range"])
+        if (headers[@"Content-Range"])
         {
-			NSString *contentRange = headers[@"Content-Range"];
-			NSRange range = [contentRange rangeOfString: @"/"];
-			NSString *totalBytesCount = [contentRange substringFromIndex: range.location + 1];
-			_expectedContentLength = [totalBytesCount floatValue];
-		}
+            NSString *contentRange = headers[@"Content-Range"];
+            NSRange range = [contentRange rangeOfString: @"/"];
+            NSString *totalBytesCount = [contentRange substringFromIndex: range.location + 1];
+            _expectedContentLength = [totalBytesCount floatValue];
+        }
         else if (headers[@"Content-Length"])
         {
             _data = [[NSMutableData alloc] init];
-			_expectedContentLength = [headers[@"Content-Length"] floatValue];
-		}
+            _expectedContentLength = [headers[@"Content-Length"] floatValue];
+        }
         else
         {
             _data = [[NSMutableData alloc] init];
             _expectedContentLength = NSURLResponseUnknownLength;
         }
-	}
+    }
+    
+    if (_expectedContentLength == 0)
+    {
+        _expectedContentLength = NSURLResponseUnknownLength;
+    }
     
     [self sendResponse:_response];
 }
@@ -186,8 +219,10 @@ static NSOperationQueue *queue;
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     [_data appendData:data];
-    
-    [self sendDownloadProgress:((CGFloat)_data.length/_expectedContentLength)];
+
+    _totalBytesReceived = [_data length];
+
+    [self sendDownloadProgress:((CGFloat)_totalBytesReceived/_expectedContentLength)];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
@@ -206,7 +241,7 @@ static NSOperationQueue *queue;
 {
     [super cancel];
     
-    _error = [NSError errorWithDomain:NSStringFromClass([self class]) code:kIQUserCancelErrorCode userInfo:nil];
+    _error = [NSError errorWithDomain:NSStringFromClass([self class]) code:NSURLErrorCancelled userInfo:nil];
     
     [self sendCompletionData:_data error:_error];
     
@@ -223,6 +258,9 @@ static NSOperationQueue *queue;
 
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
+    _totalBytesWritten = totalBytesWritten;
+    _totalBytesExpectedToWrite = totalBytesExpectedToWrite;
+
     [self sendUploadProgress:((CGFloat)totalBytesWritten/(CGFloat)totalBytesExpectedToWrite)];
 }
 
@@ -244,7 +282,3 @@ static NSOperationQueue *queue;
 }
 
 @end
-
-
-NSUInteger const kIQUserCancelErrorCode     =   4;
-NSUInteger const kIQInvalidURLErrorCode     =   5;

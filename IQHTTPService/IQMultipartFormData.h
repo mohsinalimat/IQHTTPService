@@ -1,7 +1,7 @@
 //
 //  IQMultipartFormData.h
 // https://github.com/hackiftekhar/IQHTTPService
-// Copyright (c) 2013-14 Iftekhar Qurashi.
+// Copyright (c) 2013-16 Iftekhar Qurashi.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,16 +25,51 @@
 
 @interface IQMultipartFormData : NSObject
 
-//All parameters are mendatory
-+(instancetype)multipartDataWithKeyName:(NSString*)keyName fileName:(NSString*)fileName data:(NSData*)data mimeType:(NSString*)mimeType;
-+(instancetype)multipartDataWithKeyName:(NSString*)keyName fileAtPath:(NSString*)filePath;
+/**
+ Create multipart form data object which is used to upload files to server
+ */
++(instancetype _Nonnull)multipartDataWithKeyName:(NSString* _Nonnull)keyName
+                                        fileName:(NSString* _Nonnull)fileName
+                                            data:(NSData* _Nonnull)data
+                                        mimeType:(NSString* _Nonnull)mimeType;
 
--(instancetype)initWithWithKeyName:(NSString *)keyName fileName:(NSString *)fileName data:(NSData *)data mimeType:(NSString *)mimeType;
+/**
+ Create multipart form data object from the file at given filePath
+ */
++(instancetype _Nonnull)multipartDataWithKeyName:(NSString* _Nonnull)keyName
+                                      fileAtPath:(NSString* _Nonnull)filePath;
 
-@property(nonatomic, strong, readonly) NSString *keyName;
-@property(nonatomic, strong, readonly) NSString *fileName;
-@property(nonatomic, strong, readonly) NSData *data;
-@property(nonatomic, strong, readonly) NSString *mimeType;
-@property(nonatomic, strong) NSDictionary *additionalFileAttributes;
+/**
+ Create multipart form data object which is used to upload files to server
+ */
+-(instancetype _Nonnull)initWithWithKeyName:(NSString * _Nonnull)keyName
+                                   fileName:(NSString * _Nonnull)fileName
+                                       data:(NSData * _Nonnull)data
+                                   mimeType:(NSString * _Nonnull)mimeType;
+
+/**
+ Key parameter for the server to identify file
+ */
+@property(nonnull, nonatomic, strong, readonly) NSString *keyName;
+
+/**
+ Proposed file name
+ */
+@property(nonnull, nonatomic, strong, readonly) NSString *fileName;
+
+/**
+ File Data which uploads to server
+ */
+@property(nonnull, nonatomic, strong, readonly) NSData *data;
+
+/**
+ MimeType of file
+ */
+@property(nonnull, nonatomic, strong, readonly) NSString *mimeType;
+
+/**
+ Additional file attributes
+ */
+@property(nonnull, nonatomic, strong) NSDictionary <NSString *, id> * additionalFileAttributes;
 
 @end
