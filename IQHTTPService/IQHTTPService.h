@@ -42,12 +42,12 @@
 ///--------------------------
 
 /**
- @required method Subclass must override this method and return the API path override this method.
+ @required Subclass must override this method and return the API path override this method.
  */
 -( NSString* _Nonnull)endpointAPIPathString;
 
 /**
- @optional method Use this method to filter response json response according to your needs
+ @optional Use this method to filter response json response according to needs
  */
 +(void)filterResult:(id _Nullable * _Nullable)dict error:(NSError* _Nullable * _Nullable)error response:(NSHTTPURLResponse* _Nullable)response;
 
