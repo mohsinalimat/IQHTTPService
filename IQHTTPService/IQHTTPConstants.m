@@ -138,7 +138,7 @@ void printHTTPRequest(NSURLRequest* _Nonnull request)
         
         if (requestString)
         {
-            [descriptionString appendFormat:@"\nBody:- %@",request.allHTTPHeaderFields];
+            [descriptionString appendFormat:@"\nBody:- %@",requestString];
         }
         else
         {
