@@ -67,6 +67,7 @@
                 sharedObject = [[self alloc] init];
                 
                 [sharedDictionary setObject:sharedObject forKey:NSStringFromClass([self class])];
+                return sharedObject;
             }
             else
             {
