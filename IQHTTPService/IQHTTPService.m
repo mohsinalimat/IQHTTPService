@@ -335,6 +335,11 @@
     
     NSString *contentType =[NSString stringWithFormat:@"%@; %@=%@",kIQContentTypeMultipartFormData, kIQContentTypeBoundary, boundary];
 
+    if (_logEnabled)
+    {
+        NSLog(@"\nHTTP Body:- %@",loggingMultipartString);
+    }
+    
     return [self requestWithPath:path httpMethod:method contentType:contentType httpBody:httpBody completionHandler:completionHandler];
 }
 
