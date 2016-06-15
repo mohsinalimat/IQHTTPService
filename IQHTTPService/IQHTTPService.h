@@ -106,24 +106,52 @@
 /// @name Asynchronous Requests
 ///----------------------------
 
+/**
+ [requestWithPath:(NSString*) httpMethod:(NSString*) parameter:(NSDictionary*) completionHandler:(IQDictionaryCompletionBlock)];
+ */
 -(IQURLConnection* _Nonnull)requestWithPath:(NSString* _Nonnull)path
                                  httpMethod:(NSString* _Nullable)method
                                   parameter:(NSDictionary <NSString *, id> * _Nullable)parameter
                           completionHandler:(IQDictionaryCompletionBlock _Nullable)completionHandler;
 
+/**
+ [requestWithPath:(NSString*) httpMethod:(NSString*) contentType:(NSString*) httpBody:(NSData*) completionHandler:(IQDictionaryCompletionBlock)];
+ */
 -(IQURLConnection* _Nonnull)requestWithPath:(NSString* _Nonnull)path
                                  httpMethod:(NSString* _Nullable)method
                                 contentType:(NSString* _Nullable)contentType
                                    httpBody:(NSData* _Nullable)httpBody
                           completionHandler:(IQDictionaryCompletionBlock _Nullable)completionHandler;
 
+/**
+ [requestWithPath:(NSString*) httpMethod:(NSString*) contentType:(NSString*) httpBody:(NSData*) dataCompletionHandler:(IQURLConnectionDataCompletionBlock)];
+ */
+-(IQURLConnection* _Nonnull)requestWithPath:(NSString* _Nonnull)path
+                                 httpMethod:(NSString* _Nullable)method
+                                contentType:(NSString* _Nullable)contentType
+                                   httpBody:(NSData* _Nullable)httpBody
+                      dataCompletionHandler:(IQURLConnectionDataCompletionBlock _Nullable)completionHandler;
+
 ///---------------------------------
 /// @name Asynchronous File Requests
 ///---------------------------------
 
+/**
+ [requestWithPath:(NSString*) httpMethod:(NSString*) parameter:(NSDictionary*) multipartFormDatas:(NSArray*) completionHandler:(IQDictionaryCompletionBlock)];
+ */
 -(IQURLConnection* _Nonnull)requestWithPath:(NSString* _Nonnull)path
                                  httpMethod:(NSString* _Nullable)method
                                   parameter:(NSDictionary <NSString *, id> * _Nullable)parameter
                          multipartFormDatas:(NSArray <IQMultipartFormData *>  * _Nonnull)multipartFormDatas
                           completionHandler:(IQDictionaryCompletionBlock _Nullable)completionHandler;
+
+/**
+ [requestWithPath:(NSString*) httpMethod:(NSString*) parameter:(NSDictionary*) multipartFormDatas:(NSArray*) dataCompletionHandler:(IQURLConnectionDataCompletionBlock)];
+ */
+-(IQURLConnection* _Nonnull)requestWithPath:(NSString* _Nonnull)path
+                                 httpMethod:(NSString* _Nullable)method
+                                  parameter:(NSDictionary* _Nullable)parameter
+                         multipartFormDatas:(NSArray <IQMultipartFormData *>  * _Nonnull)multipartFormDatas
+                      dataCompletionHandler:(IQURLConnectionDataCompletionBlock _Nullable)completionHandler;
+
 @end

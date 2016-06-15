@@ -122,6 +122,9 @@
 /// @name Private helpers
 ///----------------------------
 
+/**
+ [requestWithURL:(NSURL*) httpMethod:(NSString*) contentType:(NSString*) httpBody:(NSData*) dataCompletionHandler:(IQURLConnectionDataCompletionBlock)];
+ */
 -(IQURLConnection*)requestWithURL:(NSURL*)url
                        httpMethod:(NSString*)method
                       contentType:(NSString*)contentType
@@ -256,10 +259,8 @@
                                    httpBody:(NSData* _Nullable)httpBody
                           completionHandler:(IQDictionaryCompletionBlock _Nullable)completionHandler
 {
-    NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@",[self endpointAPIPathString],path] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+    __block IQURLConnection *connection = [self requestWithPath:path httpMethod:method contentType:contentType httpBody:httpBody dataCompletionHandler:^(NSData * _Nullable result, NSError * _Nullable error) {
 
-    __block IQURLConnection *connection = [self requestWithURL:url httpMethod:method contentType:contentType httpBody:httpBody dataCompletionHandler:^(NSData *result, NSError *error) {
-        
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:result options:0 error:nil];
         
         [[self class] filterResult:&dict error:&error response:connection.response];
@@ -273,18 +274,31 @@
     return connection;
 }
 
+-(IQURLConnection* _Nonnull)requestWithPath:(NSString* _Nonnull)path
+                                 httpMethod:(NSString* _Nullable)method
+                                contentType:(NSString* _Nullable)contentType
+                                   httpBody:(NSData* _Nullable)httpBody
+                      dataCompletionHandler:(IQURLConnectionDataCompletionBlock _Nullable)completionHandler
+{
+    NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@",[self endpointAPIPathString],path] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+    
+    __block IQURLConnection *connection = [self requestWithURL:url httpMethod:method contentType:contentType httpBody:httpBody dataCompletionHandler:^(NSData *result, NSError *error) {
+        
+        if (completionHandler)
+        {
+            completionHandler(result,error);
+        }
+    }];
+    
+    return connection;
+}
+
 ///----------------------------
 /// @name Asynchronous File Requests
 ///----------------------------
 
--(IQURLConnection* _Nonnull)requestWithPath:(NSString* _Nonnull)path
-                                 httpMethod:(NSString* _Nullable)method
-                                  parameter:(NSDictionary* _Nullable)parameter
-                         multipartFormDatas:(NSArray <IQMultipartFormData *>  * _Nonnull)multipartFormDatas
-                          completionHandler:(IQDictionaryCompletionBlock _Nullable)completionHandler
+-(NSData*)multipartFormDataBodyWithBoundary:(NSString*)boundary parameter:(NSDictionary* _Nullable)parameter multipartDatas:(NSArray <IQMultipartFormData *>  * _Nonnull)multipartFormDatas
 {
-    NSString *boundary = generateRandomBoundaryString();
-    
     NSMutableString *loggingMultipartString = [[NSMutableString alloc] init];  //  For logging purpose
     
     //Set HTTPBody
@@ -333,14 +347,42 @@
     [httpBody appendData:fileParameterData];
     [httpBody appendData:[closingBoundaryString dataUsingEncoding:NSUTF8StringEncoding]];
     
-    NSString *contentType =[NSString stringWithFormat:@"%@; %@=%@",kIQContentTypeMultipartFormData, kIQContentTypeBoundary, boundary];
-
     if (_logEnabled)
     {
         NSLog(@"\nHTTP Body:- %@",loggingMultipartString);
     }
     
+    return httpBody;
+}
+
+-(IQURLConnection* _Nonnull)requestWithPath:(NSString* _Nonnull)path
+                                 httpMethod:(NSString* _Nullable)method
+                                  parameter:(NSDictionary* _Nullable)parameter
+                         multipartFormDatas:(NSArray <IQMultipartFormData *>  * _Nonnull)multipartFormDatas
+                          completionHandler:(IQDictionaryCompletionBlock _Nullable)completionHandler
+{
+    NSString *boundary = generateRandomBoundaryString();
+
+    NSData *httpBody = [self multipartFormDataBodyWithBoundary:boundary parameter:parameter multipartDatas:multipartFormDatas];
+    
+    NSString *contentType =[NSString stringWithFormat:@"%@; %@=%@",kIQContentTypeMultipartFormData, kIQContentTypeBoundary, boundary];
+
     return [self requestWithPath:path httpMethod:method contentType:contentType httpBody:httpBody completionHandler:completionHandler];
+}
+
+-(IQURLConnection* _Nonnull)requestWithPath:(NSString* _Nonnull)path
+                                 httpMethod:(NSString* _Nullable)method
+                                  parameter:(NSDictionary* _Nullable)parameter
+                         multipartFormDatas:(NSArray <IQMultipartFormData *>  * _Nonnull)multipartFormDatas
+                      dataCompletionHandler:(IQURLConnectionDataCompletionBlock _Nullable)completionHandler
+{
+    NSString *boundary = generateRandomBoundaryString();
+    
+    NSData *httpBody = [self multipartFormDataBodyWithBoundary:boundary parameter:parameter multipartDatas:multipartFormDatas];
+    
+    NSString *contentType =[NSString stringWithFormat:@"%@; %@=%@",kIQContentTypeMultipartFormData, kIQContentTypeBoundary, boundary];
+    
+    return [self requestWithPath:path httpMethod:method contentType:contentType httpBody:httpBody dataCompletionHandler:completionHandler];
 }
 
 @end
